@@ -1,0 +1,503 @@
+/* ─────────────────────────────────────────────
+   global.css — Base styles for the whole app
+
+   This file styles the "skeleton" of the page:
+   body, layout grid, sidebar, nav, cards, footer.
+   It uses the variables defined in variables.css.
+
+   Individual sections (WhatsNew, Projects...) have
+   their own styles inside their component files.
+───────────────────────────────────────────── */
+
+
+/* ── Reset ────────────────────────────────────
+   Remove default browser margins/padding so
+   everything starts from a clean slate.        */
+   * {
+    box-sizing: border-box; /* padding doesn't add to the element's width */
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  /* ── Body ─────────────────────────────────────
+     The base look of the whole page               */
+  body {
+    background: var(--bg);           /* dark navy background */
+    color: var(--text);              /* default text color */
+    font-family: var(--font-body);   /* EB Garamond for all text */
+    min-height: 100vh;               /* always at least full screen height */
+    overflow-x: hidden;              /* no horizontal scroll */
+  }
+  
+  
+  /* ── Scrollbar ────────────────────────────────
+     Custom purple scrollbar (Chrome/Edge only)   */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(124, 60, 191, 0.35);
+    border-radius: 4px;
+  }
+  
+  
+  /* ── Ambient glow blobs ───────────────────────
+     Big blurry colored circles fixed in the bg.
+     They don't scroll — they stay in place.      */
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);   /* makes it look like a soft light glow */
+    pointer-events: none;  /* clicks go through them */
+    z-index: 0;            /* behind everything */
+    opacity: 0.13;         /* very subtle */
+  }
+  .glow-a {
+    width: 520px; height: 520px;
+    background: var(--glow-a-color);
+    top: -160px; left: -160px;  /* partially off-screen top-left */
+  }
+  .glow-b {
+    width: 380px; height: 380px;
+    background: var(--glow-b-color);
+    bottom: -100px; right: -80px; /* partially off-screen bottom-right */
+  }
+  .glow-c {
+    width: 260px; height: 260px;
+    background: var(--glow-c-color);
+    top: 40%; right: 15%;
+  }
+  
+  
+  /* ── Shell — main layout grid ─────────────────
+     This is the 2-column layout:
+     [sidebar 220px] [main content flex-1]
+  
+     grid-template-rows: auto 1fr means:
+     - first row (lang switcher) = as tall as it needs
+     - second row (sidebar + main) = fills remaining space */
+  .shell {
+    position: relative;
+    z-index: 1;             /* above the glow blobs */
+    max-width: 1020px;
+    margin: 0 auto;         /* center the layout */
+    padding: 52px 36px 60px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 0 52px;            /* 52px gap between sidebar and main */
+    min-height: 100vh;
+  }
+  
+  
+  /* ── Language switcher row ────────────────────
+     Spans full width (both columns) at the top   */
+  .lang-row {
+    grid-column: 1 / -1;   /* span from column 1 to the last column */
+    display: flex;
+    justify-content: flex-end; /* push to the right */
+    margin-bottom: 40px;
+  }
+  
+  
+  /* ── Sidebar ──────────────────────────────────
+     Left column: avatar on top, nav below        */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+  
+  /* Avatar circle */
+  .avatar-wrap {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(124, 92, 191, 0.55);
+    overflow: hidden;
+    margin-bottom: 44px;
+    box-shadow: 0 0 40px var(--purple-glow), inset 0 0 20px rgba(0,0,0,0.4);
+    background: var(--bg-avatar);
+    /* Entry animation — avatar scales in from small on page load */
+    animation: avatarIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .avatar-wrap svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Navigation */
+  nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 11px 8px;
+    border-bottom: 1.5px solid transparent; /* invisible border that becomes visible when active */
+    transition: color var(--transition-normal),
+                border-color var(--transition-normal),
+                transform var(--transition-fast);
+  }
+  .nav-btn:hover {
+    color: var(--text-accent);
+    transform: translateX(4px); /* slight slide to the right on hover */
+  }
+  .nav-btn.active {
+    color: var(--text-accent);
+    border-bottom-color: var(--purple-light); /* purple underline for active item */
+  }
+  
+  
+  /* ── Main content area ────────────────────────
+     Right column: banner on top, section below   */
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  
+  /* Hero banner — the big purple title at the top */
+  .hero-banner {
+    background: linear-gradient(
+      90deg,
+      var(--purple-gradient-start) 0%,
+      var(--purple-gradient-end) 100%
+    );
+    border-radius: var(--radius-lg);
+    padding: 30px 38px;
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f2eeff;
+    box-shadow: 0 8px 36px rgba(124, 60, 191, 0.4);
+    animation: bannerIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  
+  /* Generic card — used by WhatsNew, WhoAmI, Experience */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 26px;
+    animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  
+  
+  /* ── Shared row styles ────────────────────────
+     Used in timeline, experience, projects        */
+  
+  /* Timeline rows (Whats New section) */
+  .timeline-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(124, 92, 191, 0.12);
+    animation: rowIn 0.4s ease both;
+  }
+  .timeline-row:last-child { border-bottom: none; }
+  
+  /* Purple date badge e.g. "24.02" */
+  .date-pill {
+    background: var(--purple);
+    color: #f0eaff;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 11px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  
+  .timeline-text {
+    font-size: 16px;
+    color: var(--text-timeline);
+    line-height: 1.55;
+  }
+  
+  /* Bio text (Who Am I section) */
+  .bio-text {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text-bio);
+    margin-bottom: 16px;
+  }
+  .bio-text:last-of-type { margin-bottom: 20px; }
+  
+  /* Skill tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    background: rgba(124, 92, 191, 0.16);
+    border: 1px solid var(--border-tag);
+    color: var(--text-accent);
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 0.07em;
+  }
+  
+  /* Experience job rows */
+  .job-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(124, 92, 191, 0.12);
+    animation: rowIn 0.4s ease both;
+  }
+  .job-row:last-child { border-bottom: none; }
+  
+  .job-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    color: var(--text-job);
+  }
+  .job-company {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+  .period-tag {
+    background: rgba(124, 92, 191, 0.16);
+    border: 1px solid rgba(124, 92, 191, 0.32);
+    color: var(--text-accent);
+    padding: 4px 13px;
+    border-radius: 16px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+  
+  /* Project cards */
+  .project-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 22px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background var(--transition-normal),
+                border-color var(--transition-normal),
+                transform var(--transition-fast);
+    animation: rowIn 0.4s ease both;
+  }
+  .project-card:last-child { margin-bottom: 0; }
+  .project-card:hover {
+    background: rgba(124, 60, 191, 0.12);
+    border-color: var(--border-hover);
+    transform: translateX(4px);
+  }
+  .project-card.hidden { display: none; } /* used by the filter buttons */
+  
+  .project-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--text-project);
+  }
+  .project-tech {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .project-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px currentColor; /* glowing dot effect */
+  }
+  
+  /* Project category badges */
+  .project-cat-badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 2px 10px;
+    border-radius: 4px;
+    width: fit-content;
+    margin-bottom: 2px;
+  }
+  .project-cat-badge.design {
+    background: var(--badge-design-bg);
+    color: var(--badge-design-text);
+    border: 1px solid var(--badge-design-border);
+  }
+  .project-cat-badge.dev {
+    background: var(--badge-dev-bg);
+    color: var(--badge-dev-text);
+    border: 1px solid var(--badge-dev-border);
+  }
+  .project-cat-badge.wp {
+    background: var(--badge-wp-bg);
+    color: var(--badge-wp-text);
+    border: 1px solid var(--badge-wp-border);
+  }
+  
+  /* Project filter tabs */
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 16px;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+  }
+  .filter-btn svg { width: 13px; height: 13px; }
+  .filter-btn:hover {
+    color: var(--text-accent);
+    border-color: rgba(124, 92, 191, 0.45);
+  }
+  .filter-btn.active {
+    background: rgba(124, 60, 191, 0.2);
+    border-color: rgba(160, 100, 240, 0.5);
+    color: var(--text-accent);
+  }
+  
+  
+  /* ── Footer ───────────────────────────────────
+     Always visible at the bottom of the page     */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(124, 92, 191, 0.18);
+    background: linear-gradient(180deg, transparent 0%, rgba(124, 60, 191, 0.05) 100%);
+    padding: 40px 36px 32px;
+  }
+  .footer-inner {
+    max-width: 1020px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-accent);
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 8px 0 4px;
+  }
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-footer);
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    background: rgba(124, 92, 191, 0.1);
+    border: 1px solid rgba(124, 92, 191, 0.22);
+    border-radius: 8px;
+    padding: 8px 16px;
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform var(--transition-fast);
+  }
+  .footer-link svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+  .footer-link:hover {
+    background: rgba(124, 60, 191, 0.22);
+    border-color: rgba(160, 100, 240, 0.5);
+    color: var(--text-accent);
+    transform: translateY(-2px); /* lifts up on hover */
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    font-family: var(--font-display);
+    margin-top: 4px;
+  }
+  
+  
+  /* ── Animations ───────────────────────────────
+     Entry animations used across all sections    */
+  
+  /* Avatar scales in from small */
+  @keyframes avatarIn {
+    from { opacity: 0; transform: scale(0.7) translateY(-12px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+  }
+  
+  /* Hero banner slides down from above */
+  @keyframes bannerIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Cards fade up from below */
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Rows slide in from the left */
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }

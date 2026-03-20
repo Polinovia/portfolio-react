@@ -1,0 +1,94 @@
+/* ─────────────────────────────────────────────
+   variables.css — All CSS custom properties
+   (also called "CSS variables" or "design tokens")
+
+   HOW IT WORKS:
+   You define a variable once here with --name: value;
+   Then use it anywhere in your CSS with var(--name).
+   If you want to change a color across the whole site,
+   you only need to change it HERE — one place, done.
+
+   This file is imported in main.jsx so every component
+   can access these variables automatically.
+───────────────────────────────────────────── */
+
+:root {
+  /* ── Backgrounds ──────────────────────────
+     Used for the page, cards, and avatar bg  */
+  --bg:          #0b0d1a;   /* main page background (very dark navy) */
+  --bg2:         #11142a;   /* slightly lighter, used for card surfaces */
+  --bg-card:     rgba(255, 255, 255, 0.025); /* subtle white tint for cards */
+  --bg-avatar:   #1a1c2e;   /* avatar circle background */
+
+  /* ── Purple — main accent color ──────────
+     All shades of the signature purple       */
+  --purple:          #7c3cbf;  /* primary purple — buttons, pills, borders */
+  --purple-light:    #9d60e0;  /* lighter purple — hover states, active nav */
+  --purple-gradient-start: #6a28b0; /* hero banner gradient left  */
+  --purple-gradient-end:   #9d5adf; /* hero banner gradient right */
+  --purple-dim:      rgba(124, 60, 191, 0.18);  /* very faint purple — tag bg */
+  --purple-border:   rgba(124, 92, 191, 0.22);  /* card/section borders */
+  --purple-glow:     rgba(124, 60, 191, 0.35);  /* box-shadow glow effect */
+
+  /* ── Text colors ──────────────────────────
+     Different levels of brightness for text  */
+  --text:        #ddd8f0;  /* main body text */
+  --text-accent: #c8aaff;  /* highlighted text, active nav, tags */
+  --text-bio:    #b8b4d4;  /* bio paragraph text (slightly dimmer) */
+  --text-timeline: #c4c0dc; /* timeline entry text */
+  --text-job:    #d4c8f4;  /* job title text */
+  --text-project: #d8d0f0; /* project name text */
+  --text-footer: #a090cc;  /* footer link text */
+  --text-muted:  #7a7a99;  /* secondary/placeholder text */
+  --text-faint:  #44445a;  /* footer copyright (very dim) */
+
+  /* ── Borders ──────────────────────────────
+     Subtle lines that separate elements       */
+  --border:      rgba(124, 92, 191, 0.22); /* default card border */
+  --border-hover: rgba(160, 100, 240, 0.45); /* border on hover */
+  --border-tag:  rgba(124, 92, 191, 0.35);  /* skill tag border */
+
+  /* ── Project dot colors ───────────────────
+     Colored dots on the right of project cards */
+  --dot-design:    #9c5cdf;  /* purple  — Figma/design projects */
+  --dot-dev:       #5c7cdf;  /* blue    — front-end/dev projects */
+  --dot-wordpress: #bf9c5c;  /* gold    — WordPress projects */
+  --dot-other:     #5cbf9c;  /* teal    — other projects */
+
+  /* ── Project badge colors ─────────────────
+     Background + text for category badges     */
+  --badge-design-bg:     rgba(156, 92, 223, 0.2);
+  --badge-design-border: rgba(156, 92, 223, 0.35);
+  --badge-design-text:   #c8aaff;
+
+  --badge-dev-bg:     rgba(92, 124, 223, 0.2);
+  --badge-dev-border: rgba(92, 124, 223, 0.35);
+  --badge-dev-text:   #aac0ff;
+
+  --badge-wp-bg:     rgba(191, 156, 92, 0.2);
+  --badge-wp-border: rgba(191, 156, 92, 0.35);
+  --badge-wp-text:   #f0d090;
+
+  /* ── Ambient glow blobs ───────────────────
+     The big blurry colored circles in the bg  */
+  --glow-a-color: #7c3cbf;  /* top-left purple glow */
+  --glow-b-color: #3b4fc8;  /* bottom-right blue glow */
+  --glow-c-color: #9c3cbf;  /* mid-right pink-purple glow */
+
+  /* ── Typography ───────────────────────────
+     Font families used across the portfolio   */
+  --font-display: 'Cinzel', serif;       /* headings, nav, labels — elegant serif */
+  --font-body:    'EB Garamond', serif;  /* paragraphs, bio text — classic book font */
+
+  /* ── Spacing ──────────────────────────────
+     Consistent spacing scale                  */
+  --radius-sm:  5px;   /* small elements like date pills */
+  --radius-md:  10px;  /* project cards, contact rows */
+  --radius-lg:  14px;  /* main cards, hero banner */
+
+  /* ── Transitions ──────────────────────────
+     Reusable animation speeds                 */
+  --transition-fast:   0.2s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow:   0.4s ease;
+}

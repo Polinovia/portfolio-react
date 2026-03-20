@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Sidebar from './components/Layout/Sidebar'
 import Footer from './components/Layout/Footer'
 import LangSwitcher from './components/Layout/LangSwitcher'
-import HeroBanner from './components/UI/Banner'
+import Banner from './components/UI/Banner'
 
 import WhatsNew from './sections/Whatsnew'
 import WhoAmI from './sections/WhoAmI'
@@ -98,7 +98,7 @@ export default function App() {
         onNavigate={setActiveSection}
       />
       <main>
-        <HeroBanner title={TITLES[activeSection]} />
+        <Banner title={TITLES[activeSection]} />
         <div key={activeSection}>
           {renderSection()}
         </div>
