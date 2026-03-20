@@ -44,7 +44,7 @@ function Starfield() {
       }))
     }
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.heigh)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
       stars.forEach(s => {
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
