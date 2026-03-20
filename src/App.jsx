@@ -14,7 +14,6 @@ import Projects from './sections/Projects'
 
 import { useEffect, useRef } from 'react'
 
-const SECTIONS = ['news', 'who', 'skills', 'exp', 'projects']
 
 const TITLES = {
   news: 'About me',
