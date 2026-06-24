@@ -77,7 +77,7 @@ const TRANSLATIONS = {
 
 const TranslationContext = createContext({
   lang: 'EN',
-  setLang: () => {},
+  setLang: () => { },
   t: (p) => p
 })
 
@@ -85,7 +85,7 @@ export function TranslationProvider({ children, defaultLang = 'EN' }) {
   const [lang, setLang] = useState(defaultLang)
 
   useEffect(() => {
-    try { document.documentElement.lang = String(lang).toLowerCase() } catch (e) {}
+    try { document.documentElement.lang = String(lang).toLowerCase() } catch (e) { }
   }, [lang])
 
   const t = useMemo(() => (path) => {
@@ -109,7 +109,7 @@ export function TranslationProvider({ children, defaultLang = 'EN' }) {
 
 export function useTranslation() {
   const ctx = useContext(TranslationContext)
-  if (!ctx) return { lang: 'EN', setLang: () => {}, t: (p) => p }
+  if (!ctx) return { lang: 'EN', setLang: () => { }, t: (p) => p }
   return ctx
 }
 

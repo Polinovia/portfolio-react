@@ -66,7 +66,7 @@ function Starfield() {
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('news')
-  
+
   const renderSection = () => {
     switch (activeSection) {
       case 'news': return <WhatsNew />
