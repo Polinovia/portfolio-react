@@ -7,8 +7,10 @@
 // to personalize it with your real info.
 // ─────────────────────────────────────────────
 
+import { useTranslation } from '../../i18n/TranslationProvider'
+
 // Your display name shown in the footer
-const NAME = 'Your Name'
+const NAME = 'Polina Bevz'
 
 // Your tagline shown below your name
 const TAGLINE = 'Front-end Developer · Open to work'
@@ -20,8 +22,8 @@ const TAGLINE = 'Front-end Developer · Open to work'
 // - icon:  an SVG element
 const LINKS = [
   {
-    label: 'hello@portfolio.dev',
-    href: 'mailto:hello@portfolio.dev',
+    label: 'polya.bevz02@gmail.com',
+    href: 'polya.bevz02@gmail.com',
     icon: (
       // Email icon
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -31,8 +33,8 @@ const LINKS = [
     ),
   },
   {
-    label: 'github.com/yourname',
-    href: 'https://github.com/yourname',
+    label: 'github.com/Polinovia',
+    href: 'https://github.com/Polinovia',
     icon: (
       // GitHub icon
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -41,8 +43,8 @@ const LINKS = [
     ),
   },
   {
-    label: 'linkedin.com/in/yourname',
-    href: 'https://linkedin.com/in/yourname',
+    label: 'linkedin.com/in/polinabevz02',
+    href: 'https://www.linkedin.com/in/polinabevz02/',
     icon: (
       // LinkedIn icon
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -52,7 +54,10 @@ const LINKS = [
   },
 ]
 
-export default function Footer() {
+export default function Footer({ t }) {
+  const { t: ctxT } = useTranslation()
+  const translate = t || ctxT
+
   return (
     <footer>
       <div className="footer-inner">
@@ -61,7 +66,7 @@ export default function Footer() {
         <div className="footer-name">{NAME}</div>
 
         {/* Tagline */}
-        <div className="footer-tagline">{TAGLINE}</div>
+        <div className="footer-tagline">{translate('footer.tagline') || TAGLINE}</div>
 
         {/* Contact links — one button per item in LINKS array */}
         <div className="footer-links">

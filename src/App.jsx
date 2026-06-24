@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { TranslationProvider } from './i18n/TranslationProvider'
 
 import Sidebar from './components/Layout/Sidebar'
 import Footer from './components/Layout/Footer'
@@ -12,22 +13,14 @@ import Experience from './sections/Experience'
 import Projects from './sections/Projects'
 
 
-import { useEffect, useRef } from 'react'
-
-
-const TITLES = {
-  news: 'About me',
-  who: 'Who am I?',
-  skills: 'My skills',
-  exp: 'Professional experience',
-  projects: 'My Projects'
-}
 
 function Starfield() {
   const canvasRef = useRef(null)
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx = canvas.getContex('2d')
+    if (!canvas) return
+    const ctx = canvas.getContext && canvas.getContext('2d')
+    if (!ctx) return
     let animId
     let stars = []
 
@@ -35,7 +28,7 @@ function Starfield() {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
 
-      stars = Array.from({ leght: 160 }, () => ({
+      stars = Array.from({ length: 160 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         r: Math.random() * 1.2 + 0.2,
@@ -44,6 +37,7 @@ function Starfield() {
       }))
     }
     const draw = () => {
+      if (!ctx) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       stars.forEach(s => {
         ctx.beginPath()
@@ -51,7 +45,7 @@ function Starfield() {
         ctx.fillStyle = `rgba(200,190,255,${s.o})`
         ctx.fill()
         s.y += s.speed
-        if (s.y > canvas.heigh) { s.y = 0; s.x = Math.random() * canvas.width }
+        if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width }
       })
       animId = requestAnimationFrame(draw)
     }
@@ -72,7 +66,7 @@ function Starfield() {
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('news')
-  const [lang, setlang] = useState('EN')
+  
   const renderSection = () => {
     switch (activeSection) {
       case 'news': return <WhatsNew />
@@ -89,21 +83,24 @@ export default function App() {
       <div className='glow glow-b' />
       <div className='glow glow-c' />
       <Starfield />
-      <div className='shell' />
-      <div className='lang-row'>
-        <LangSwitcher current={lang} onChange={setlang} />
-      </div>
-      <Sidebar
-        activeSection={activeSection}
-        onNavigate={setActiveSection}
-      />
-      <main>
-        <Banner title={TITLES[activeSection]} />
-        <div key={activeSection}>
-          {renderSection()}
+      <TranslationProvider defaultLang={'EN'}>
+        <div className='shell'>
+          <div className='lang-row'>
+            <LangSwitcher />
+          </div>
+          <Sidebar
+            activeSection={activeSection}
+            onNavigate={setActiveSection}
+          />
+          <main className='main'>
+            <Banner titleKey={`titles.${activeSection}`} />
+            <div key={activeSection}>
+              {renderSection()}
+            </div>
+          </main>
         </div>
-      </main>
-      <Footer />
+        <Footer />
+      </TranslationProvider>
     </>
   )
 }

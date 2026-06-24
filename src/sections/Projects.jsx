@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import { useTranslation } from '../i18n/TranslationProvider'
 import ProjectCard from '../components/UI/Projectcard'
 
 // ── Filter tabs ────────────────────────────────
@@ -7,15 +8,15 @@ import ProjectCard from '../components/UI/Projectcard'
 // - id:    used to match project.category
 // - label: text shown on the button
 // - icon:  small SVG icon (optional but nice)
-const FILTERS = [
+const FILTERS = (t = () => ({})) => [
   {
     id: 'all',
-    label: 'All',
+    label: t('filters.all') || 'All',
     icon: null,
   },
   {
     id: 'design',
-    label: 'Design',
+    label: t('filters.design') || 'Design',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -25,7 +26,7 @@ const FILTERS = [
   },
   {
     id: 'dev',
-    label: 'Dev',
+    label: t('filters.dev') || 'Dev',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" />
@@ -35,7 +36,7 @@ const FILTERS = [
   },
   {
     id: 'wordpress',
-    label: 'WordPress',
+    label: t('filters.wordpress') || 'WordPress',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
@@ -99,10 +100,12 @@ const PROJECTS = [
   },
 ]
 
-export default function Projects() {
+export default function Projects({ t }) {
   // activeFilter stores the currently selected filter tab.
   // 'all' is the default — shows every project.
   const [activeFilter, setActiveFilter] = useState('all')
+  const { t: ctxT } = useTranslation()
+  const translate = t || ctxT
 
   // filteredProjects returns only the projects that match
   // the active filter. If 'all' is selected, show everything.
@@ -115,7 +118,7 @@ export default function Projects() {
 
       {/* ── Filter tabs ── */}
       <div className="filter-tabs">
-        {FILTERS.map(filter => (
+        {FILTERS(translate).map(filter => (
           <button
             key={filter.id}
             className={`filter-btn${activeFilter === filter.id ? ' active' : ''}`}

@@ -7,6 +7,8 @@
 // - onNavigate: function to call when user clicks a nav button
 // ─────────────────────────────────────────────
 
+import { useTranslation } from '../../i18n/TranslationProvider'
+
 // NAV_ITEMS defines all the navigation buttons.
 // Each item has:
 // - id:    matches the section ID used in App.jsx
@@ -18,9 +20,11 @@ const NAV_ITEMS = [
   { id: 'projects', label: 'My Projects' },
 ]
 
-export default function Sidebar({ activeSection, onNavigate }) {
+export default function Sidebar({ activeSection, onNavigate, t }) {
   // activeSection and onNavigate come from App.jsx as props.
   // Props are like "arguments" you pass to a component.
+  const { t: ctxT } = useTranslation()
+  const translate = t || ctxT
 
   return (
     <aside className="sidebar">
@@ -112,7 +116,7 @@ export default function Sidebar({ activeSection, onNavigate }) {
 
             onClick={() => onNavigate(item.id)}
           >
-            {item.label}
+            {translate(`nav.${item.id}`) || item.label}
           </button>
         ))}
       </nav>

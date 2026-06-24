@@ -7,11 +7,14 @@
 // - onChange: function to call when user picks a language
 // ─────────────────────────────────────────────
 
+import { useTranslation } from '../../i18n/TranslationProvider'
+
 // The list of available languages.
 // To add a new one, just add it to this array.
 const LANGS = ['EN', 'FR', 'UA']
 
-export default function LangSwitcher({ current, onChange }) {
+export default function LangSwitcher() {
+  const { lang: current, setLang } = useTranslation()
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -25,8 +28,8 @@ export default function LangSwitcher({ current, onChange }) {
             // Add 'active' class when this language is the selected one
             className={`lang-btn${current === lang ? ' active' : ''}`}
 
-            // When clicked, tell App.jsx to update the language
-            onClick={() => onChange(lang)}
+            // When clicked, tell the provider to update the language
+            onClick={() => setLang(lang)}
           >
             {lang}
           </button>
