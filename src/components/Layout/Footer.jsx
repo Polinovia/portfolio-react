@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────
-// Footer.jsx — Bottom bar always visible on the page
-// Contains: contact links only — name/tagline already
+// Footer.jsx - Bottom bar always visible on the page
+// Contains: contact links only - name/tagline already
 // shown in the sidebar, no need to repeat them here.
 //
-// No props needed — this component is static.
+// No props needed - this component is static.
 // Just update the LINKS array below to personalize
 // it with your real info.
 // ─────────────────────────────────────────────
@@ -52,7 +52,7 @@ export default function Footer() {
     <footer>
       <div className="footer-inner">
 
-        {/* Contact links — one button per item in LINKS array */}
+        {/* Contact links - one button per item in LINKS array */}
         <div className="footer-links">
           {LINKS.map(link => (
             <a

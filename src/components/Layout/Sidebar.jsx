@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// Sidebar.jsx — Left column of the portfolio
+// Sidebar.jsx - Left column of the portfolio
 // Contains: the elf avatar + navigation buttons
 //
 // PROPS (values passed from App.jsx):

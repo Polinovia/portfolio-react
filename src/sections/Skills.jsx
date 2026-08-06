@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// Skills.jsx — Grid of skill icons, grouped by category
+// Skills.jsx - Grid of skill icons, grouped by category
 // ─────────────────────────────────────────────
 
 import {

@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────
-   variables.css — All CSS custom properties
+   variables.css - All CSS custom properties
    (also called "CSS variables" or "design tokens")
 
    HOW IT WORKS:
    You define a variable once here with --name: value;
    Then use it anywhere in your CSS with var(--name).
    If you want to change a color across the whole site,
-   you only need to change it HERE — one place, done.
+   you only need to change it HERE - one place, done.
 
    This file is imported in main.jsx so every component
    can access these variables automatically.
@@ -20,13 +20,13 @@
   --bg-card:     rgba(255, 255, 255, 0.025); /* subtle white tint for cards */
   --bg-avatar:   #1a1c2e;   /* avatar circle background */
 
-  /* ── Purple — main accent color ──────────
+  /* ── Purple - main accent color ──────────
      All shades of the signature purple       */
-  --purple:          #7c3cbf;  /* primary purple — buttons, pills, borders */
-  --purple-light:    #9d60e0;  /* lighter purple — hover states, active nav */
+  --purple:          #7c3cbf;  /* primary purple - buttons, pills, borders */
+  --purple-light:    #9d60e0;  /* lighter purple - hover states, active nav */
   --purple-gradient-start: #6a28b0; /* hero banner gradient left  */
   --purple-gradient-end:   #9d5adf; /* hero banner gradient right */
-  --purple-dim:      rgba(124, 60, 191, 0.18);  /* very faint purple — tag bg */
+  --purple-dim:      rgba(124, 60, 191, 0.18);  /* very faint purple - tag bg */
   --purple-border:   rgba(124, 92, 191, 0.22);  /* card/section borders */
   --purple-glow:     rgba(124, 60, 191, 0.35);  /* box-shadow glow effect */
 
@@ -50,10 +50,10 @@
 
   /* ── Project dot colors ───────────────────
      Colored dots on the right of project cards */
-  --dot-design:    #9c5cdf;  /* purple  — Figma/design projects */
-  --dot-dev:       #5c7cdf;  /* blue    — front-end/dev projects */
-  --dot-wordpress: #bf9c5c;  /* gold    — WordPress projects */
-  --dot-other:     #5cbf9c;  /* teal    — other projects */
+  --dot-design:    #9c5cdf;  /* purple  - Figma/design projects */
+  --dot-dev:       #5c7cdf;  /* blue    - front-end/dev projects */
+  --dot-wordpress: #bf9c5c;  /* gold    - WordPress projects */
+  --dot-other:     #5cbf9c;  /* teal    - other projects */
 
   /* ── Project badge colors ─────────────────
      Background + text for category badges     */
@@ -77,8 +77,9 @@
 
   /* ── Typography ───────────────────────────
      Font families used across the portfolio   */
-  --font-display: 'Cinzel', serif;       /* headings, nav, labels — elegant serif */
-  --font-body:    'EB Garamond', serif;  /* paragraphs, bio text — classic book font */
+  --font-display: 'Cinzel', serif;       /* headings, nav, labels - elegant serif */
+  --font-body:    'EB Garamond', serif;  /* paragraphs, bio text - classic book font */
+  --font-hero:    'Playfair Display', serif; /* section hero title banner */
 
   /* ── Spacing ──────────────────────────────
      Consistent spacing scale                  */

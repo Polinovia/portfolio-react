@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// LangSwitcher.jsx — Language selector (EN/FR/UA)
+// LangSwitcher.jsx - Language selector (EN/FR/UA)
 // Displayed in the top-right corner of the page.
 //
 // PROPS (values passed from App.jsx):

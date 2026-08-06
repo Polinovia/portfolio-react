@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────
-// WhatsNew.jsx — Timeline of recent updates
+// WhatsNew.jsx - Timeline of recent updates
 // This is the first section shown on page load.
 //
 // Update text lives in TranslationProvider (per
-// language) under the `news` key — see i18n/TranslationProvider.jsx.
+// language) under the `news` key - see i18n/TranslationProvider.jsx.
 // ─────────────────────────────────────────────
 
 import { useState } from 'react'
