@@ -15,16 +15,6 @@ const FILTERS = (t = () => ({})) => [
     icon: null,
   },
   {
-    id: 'design',
-    label: t('filters.design') || 'Design',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="3" />
-        <path d="M9 9h6M9 12h6M9 15h4" />
-      </svg>
-    ),
-  },
-  {
     id: 'dev',
     label: t('filters.dev') || 'Dev',
     icon: (
@@ -35,12 +25,12 @@ const FILTERS = (t = () => ({})) => [
     ),
   },
   {
-    id: 'wordpress',
-    label: t('filters.wordpress') || 'WordPress',
+    id: 'design',
+    label: t('filters.design') || 'Design',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
+        <rect x="3" y="3" width="18" height="18" rx="3" />
+        <path d="M9 9h6M9 12h6M9 15h4" />
       </svg>
     ),
   },
@@ -50,53 +40,112 @@ const FILTERS = (t = () => ({})) => [
 // Each object = one project card.
 // - name:     project title
 // - tech:     tech stack shown below the name
-// - category: must match a filter id ('design' | 'dev' | 'wordpress')
+// - category: must match a filter id ('dev' | 'design')
 // - dotColor: color of the glowing dot on the right
 const PROJECTS = [
-  // Design projects
   {
-    name: 'Portfolio v2',
-    tech: 'Figma · Auto Layout · Prototype',
+    name: 'NezZen',
+    tech: 'Figma · UI Design',
     category: 'design',
-    dotColor: '#9c5cdf',
+    dotColor: '#bf9c5c',
+    url: 'https://www.figma.com/design/9FhPm5Ric9S2FQj2Syr1J6/NezZen?node-id=0-1&t=6BQBuoPJaaO8kriO-1',
   },
   {
-    name: 'Mobile App UI',
-    tech: 'Figma · Components · Lottie',
+    name: 'Portfolio',
+    tech: 'Figma · UI Design',
     category: 'design',
-    dotColor: '#9c5cdf',
+    dotColor: '#bf9c5c',
+    url: 'https://www.figma.com/design/a3iytrjfRqUQUAZfDZg4Mq/Portfolio?node-id=0-1&t=UVWcuWniWx7Z3pIY-1',
   },
-  // Dev projects
   {
-    name: 'Dashboard UI',
-    tech: 'React · Tailwind · Chart.js',
+    name: '12.05',
+    tech: 'HTML · Landing Page',
+    category: 'dev',
+    dotColor: '#9c5cdf',
+    url: 'https://github.com/Polinovia/12.05',
+  },
+  {
+    name: '15.05',
+    tech: 'JavaScript · Interaction',
+    category: 'dev',
+    dotColor: '#9c5cdf',
+    url: 'https://github.com/Polinovia/15.05',
+  },
+  {
+    name: 'airport',
+    tech: 'React · API · UI',
     category: 'dev',
     dotColor: '#5c7cdf',
+    url: 'https://github.com/Polinovia/airport',
+    previewUrl: 'https://courir-ex.netlify.app/',
   },
   {
-    name: 'Custom CMS',
-    tech: 'PHP · MySQL · REST API',
+    name: 'articles-vue',
+    tech: 'Vue · Content · Articles',
     category: 'dev',
     dotColor: '#5c7cdf',
+    url: 'https://github.com/Polinovia/articles-vue',
+    previewUrl: 'https://pwa-vue-polina.netlify.app/',
   },
   {
-    name: '3D Landing Page',
-    tech: 'Three.js · GSAP · WebGL',
+    name: 'exercice-front',
+    tech: 'JavaScript · Game · UI',
+    category: 'dev',
+    dotColor: '#5c7cdf',
+    url: 'https://github.com/Polinovia/exercice-front',
+    previewUrl: 'https://jeuphrasesbevz.netlify.app/',
+  },
+  {
+    name: 'front_quiestla',
+    tech: 'Vue · Responsive · UI',
+    category: 'dev',
+    dotColor: '#5c7cdf',
+    url: 'https://github.com/Polinovia/front_quiestla',
+    previewUrl: 'https://quiestla-polina.netlify.app/',
+  },
+  {
+    name: 'jamstack-nuxt',
+    tech: 'Nuxt · Jamstack · Static',
     category: 'dev',
     dotColor: '#5cbf9c',
-  },
-  // WordPress projects
-  {
-    name: 'Business Website',
-    tech: 'WordPress · ACF · Custom Theme',
-    category: 'wordpress',
-    dotColor: '#bf9c5c',
+    url: 'https://github.com/Polinovia/jamstack-nuxt',
+    previewUrl: 'https://nuxtdyn.netlify.app/',
   },
   {
-    name: 'E-commerce Store',
-    tech: 'WooCommerce · PHP · Elementor',
-    category: 'wordpress',
-    dotColor: '#bf9c5c',
+    name: 'my-nuxt-auth',
+    tech: 'Nuxt · Auth · SSR',
+    category: 'dev',
+    dotColor: '#5cbf9c',
+    url: 'https://github.com/Polinovia/my-nuxt-auth',
+  },
+  {
+    name: 'notif_avec_vue',
+    tech: 'Vue · Notifications · UI',
+    category: 'dev',
+    dotColor: '#5cbf9c',
+    url: 'https://github.com/Polinovia/notif_avec_vue',
+  },
+  {
+    name: 'php-demo',
+    tech: 'PHP · Demo · Backend',
+    category: 'dev',
+    dotColor: '#5cbf9c',
+    url: 'https://github.com/Polinovia/php-demo',
+  },
+  {
+    name: 'React',
+    tech: 'React · Web App',
+    category: 'dev',
+    dotColor: '#5cbf9c',
+    url: 'https://github.com/Polinovia/React',
+  },
+  {
+    name: 'wf12-pwa-bpi',
+    tech: 'PWA · Service Workers · Offline',
+    category: 'dev',
+    dotColor: '#5cbf9c',
+    url: 'https://github.com/Polinovia/wf12-pwa-bpi',
+    previewUrl: 'https://wf12-pwa-bpi.netlify.app/',
   },
 ]
 
@@ -141,6 +190,8 @@ export default function Projects({ t }) {
             tech={project.tech}
             category={project.category}
             dotColor={project.dotColor}
+            url={project.url}
+            previewUrl={project.previewUrl}
             // Stagger animation delay based on position in filtered list
             delay={index * 0.07}
           />

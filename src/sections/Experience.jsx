@@ -1,7 +1,8 @@
 const JOBS = [
-  { role: 'UI/UX Designer', company: 'Freelance', period: '2024 – Present' },
-  { role: 'Front-end Developer', company: 'Studio X', period: '2022 – 2024' },
-  { role: 'Graphic Designer', company: 'Creative Co.', period: '2020 – 2022' },
+  { role: 'Développeur front-end', company: 'CEPEGRA · Formation', period: 'May 2025 – Dec 2025' },
+  { role: 'Développeur front-end', company: 'PlayZone', period: 'Nov 2025 – Dec 2025' },
+  { role: 'Designer Web', company: 'Sante Group Companies · Internship', period: 'Sep 2023 – Dec 2023' },
+  { role: 'Junior Programmer', company: 'Fozzy Group · Internship', period: 'Sep 2019 – May 2020' },
 ]
 
 export default function Experience() {
