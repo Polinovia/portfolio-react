@@ -8,7 +8,7 @@
 // ─────────────────────────────────────────────
 
 import { useTranslation } from '../../i18n/TranslationProvider'
-import avatarPhoto from '../../assets/avatar.png'
+import avatarPhoto from '../../assets/avatar.webp'
 
 // NAV_ITEMS defines all the navigation buttons.
 // Each item has:

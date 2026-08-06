@@ -492,10 +492,6 @@ nav {
   border-color: var(--border-hover);
   transform: translateX(4px);
 }
-.project-card.hidden {
-  display: none;
-} /* used by the filter buttons */
-
 .project-card-main {
   display: flex;
   justify-content: space-between;
@@ -578,40 +574,72 @@ nav {
   border: 1px solid var(--badge-wp-border);
 }
 
-/* Project filter tabs */
-.filter-tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
+/* Project folders (dossiers) — grouped by tech stack, collapsible */
+.project-folder {
+  margin-bottom: 12px;
+  animation: rowIn 0.4s ease both;
 }
-.filter-btn {
+.project-folder-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.03);
+  gap: 10px;
+  width: 100%;
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 7px 16px;
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: 11px;
-  letter-spacing: 0.12em;
   cursor: pointer;
   transition: all var(--transition-normal);
 }
-.filter-btn svg {
-  width: 13px;
-  height: 13px;
-}
-.filter-btn:hover {
+.project-folder-header:hover {
   color: var(--text-accent);
-  border-color: rgba(124, 92, 191, 0.45);
+  border-color: var(--border-hover);
 }
-.filter-btn.active {
-  background: rgba(124, 60, 191, 0.2);
+.project-folder-header.open {
   border-color: rgba(160, 100, 240, 0.5);
   color: var(--text-accent);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.project-folder-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.project-folder-name {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.project-folder-count {
+  background: rgba(124, 92, 191, 0.16);
+  border: 1px solid rgba(124, 92, 191, 0.32);
+  border-radius: 999px;
+  padding: 1px 9px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.project-folder-chevron {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+.project-folder-header.open .project-folder-chevron {
+  transform: rotate(90deg);
+}
+.project-folder-body {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  padding: 14px;
+}
+.project-folder-body .project-card:last-child {
+  margin-bottom: 0;
 }
 
 /* ── Footer ───────────────────────────────────

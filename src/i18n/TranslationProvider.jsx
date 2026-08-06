@@ -19,12 +19,6 @@ const TRANSLATIONS = {
     footer: {
       tagline: 'Front-end Developer · Open to work'
     },
-    filters: {
-      all: 'All',
-      design: 'Design',
-      dev: 'Dev',
-      wordpress: 'WordPress'
-    },
     bio: [
       "I'm a 26-year-old front-end developer based in Namur, Belgium — with a soul caught somewhere between code and poetry. I see interfaces the way others see paintings: every pixel a brushstroke, every animation a breath of life.",
       "I love building things that feel as beautiful as they function. Writing code isn't just technical work for me — it's a form of expression, a way to turn invisible ideas into something people can actually touch and feel. When I'm not deep in a project, you'll find me lost in a book, drawing, or listening to music that makes the world feel a little bigger.",
@@ -72,12 +66,6 @@ const TRANSLATIONS = {
     footer: {
       tagline: 'Développeuse front‑end · Ouverte aux opportunités'
     },
-    filters: {
-      all: 'Tous',
-      design: 'Design',
-      dev: 'Dév',
-      wordpress: 'WordPress'
-    },
     bio: [
       "J'ai 26 ans, je suis développeuse front-end basée à Namur, en Belgique — avec une âme partagée entre le code et la poésie. Je vois les interfaces comme d'autres voient des tableaux : chaque pixel un coup de pinceau, chaque animation un souffle de vie.",
       "J'aime créer des choses aussi belles que fonctionnelles. Écrire du code n'est pas qu'un travail technique pour moi — c'est une forme d'expression, une façon de transformer des idées invisibles en quelque chose que les gens peuvent réellement toucher et ressentir. Quand je ne suis pas plongée dans un projet, vous me trouverez perdue dans un livre, en train de dessiner, ou à écouter de la musique qui rend le monde un peu plus grand.",
@@ -124,12 +112,6 @@ const TRANSLATIONS = {
     },
     footer: {
       tagline: 'Фронтенд-розробник · Відкритий до пропозицій'
-    },
-    filters: {
-      all: 'Всі',
-      design: 'Дизайн',
-      dev: 'Розробка',
-      wordpress: 'WordPress'
     },
     bio: [
       'Мені 26 років, я фронтенд-розробниця з Намюра, Бельгія — з душею, що балансує між кодом і поезією. Я бачу інтерфейси так, як інші бачать картини: кожен піксель — мазок пензля, кожна анімація — подих життя.',
