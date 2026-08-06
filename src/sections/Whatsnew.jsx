@@ -7,7 +7,11 @@
 // the UPDATES array with a date and text.
 // ─────────────────────────────────────────────
 
+import { useState } from 'react'
 import DatePill from '../components/UI/DatePill'
+
+// How many rows are visible at once
+const PAGE_SIZE = 5
 
 // ── Data ──────────────────────────────────────
 // Each object = one row in the timeline.
@@ -32,11 +36,48 @@ const UPDATES = [
 ]
 
 export default function WhatsNew() {
+  // startIndex = first visible row. Arrows shift the 5-row window.
+  const [startIndex, setStartIndex] = useState(0)
+
+  const canScrollUp = startIndex > 0
+  const canScrollDown = startIndex + PAGE_SIZE < UPDATES.length
+  const visibleUpdates = UPDATES.slice(startIndex, startIndex + PAGE_SIZE)
+
   return (
     <div className="card">
-      {UPDATES.map((item, index) => (
+      <div className="timeline-header">
+        <span className="timeline-count">
+          {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, UPDATES.length)} of {UPDATES.length}
+        </span>
+        <div className="timeline-arrows">
+          <button
+            type="button"
+            className="timeline-arrow-btn"
+            disabled={!canScrollUp}
+            onClick={() => setStartIndex(i => Math.max(0, i - 1))}
+            aria-label="Show newer updates"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="18 15 12 9 6 15" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="timeline-arrow-btn"
+            disabled={!canScrollDown}
+            onClick={() => setStartIndex(i => Math.min(UPDATES.length - PAGE_SIZE, i + 1))}
+            aria-label="Show older updates"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {visibleUpdates.map((item, index) => (
         <div
-          key={index}
+          key={startIndex + index}
           className="timeline-row"
           // Stagger animation: each row appears slightly after the previous one
           style={{ animationDelay: `${index * 0.07}s` }}

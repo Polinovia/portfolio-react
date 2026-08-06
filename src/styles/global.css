@@ -163,9 +163,39 @@ body {
   /* Entry animation — avatar scales in from small on page load */
   animation: avatarIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-.avatar-wrap svg {
+.avatar-wrap svg,
+.avatar-wrap .avatar-photo {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+/* Mini intro card — sits between avatar and nav */
+.sidebar-intro {
+  width: 100%;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  margin-bottom: 20px;
+  animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.sidebar-intro-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+.sidebar-intro-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  font-style: italic;
+  margin-top: 4px;
 }
 
 /* Navigation */
@@ -211,6 +241,23 @@ nav {
   gap: 22px;
 }
 
+/* Section title banner — big purple gradient box at the top of .main */
+.banner {
+  background: linear-gradient(
+    90deg,
+    var(--purple-gradient-start) 0%,
+    var(--purple-gradient-end) 100%
+  );
+  border-radius: var(--radius-lg);
+  padding: 22px 34px;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: #f2eeff;
+  box-shadow: 0 8px 36px rgba(124, 60, 191, 0.4);
+  animation: bannerIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* Hero banner — the big purple title at the top */
 .hero-banner {
   background: linear-gradient(
@@ -241,6 +288,53 @@ nav {
 
 /* ── Shared row styles ────────────────────────
      Used in timeline, experience, projects        */
+
+/* Timeline header — row count + up/down arrows (Whats New section) */
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(124, 92, 191, 0.12);
+}
+.timeline-count {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.timeline-arrows {
+  display: flex;
+  gap: 6px;
+}
+.timeline-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(124, 92, 191, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-accent);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+.timeline-arrow-btn svg {
+  width: 15px;
+  height: 15px;
+}
+.timeline-arrow-btn:hover:not(:disabled) {
+  background: rgba(124, 60, 191, 0.22);
+  border-color: var(--border-hover);
+}
+.timeline-arrow-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
 
 /* Timeline rows (Whats New section) */
 .timeline-row {
@@ -299,6 +393,53 @@ nav {
   border-radius: 20px;
   font-size: 13px;
   letter-spacing: 0.07em;
+}
+
+/* Skills section — grouped icon grid */
+.skill-group {
+  animation: rowIn 0.4s ease both;
+}
+.skill-group + .skill-group {
+  margin-top: 28px;
+}
+.skill-group-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  margin-bottom: 18px;
+}
+.skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 76px;
+}
+.skill-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+.skill-icon svg {
+  width: 28px;
+  height: 28px;
+}
+.skill-name {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 
 /* Experience job rows */

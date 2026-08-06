@@ -3,7 +3,7 @@ import React, { createContext, useContext, useMemo, useState, useEffect } from '
 const TRANSLATIONS = {
   EN: {
     titles: {
-      news: 'About me',
+      news: 'News',
       who: 'Who am I?',
       skills: 'My skills',
       exp: 'Professional experience',
@@ -12,6 +12,7 @@ const TRANSLATIONS = {
     nav: {
       news: 'Whats New',
       who: 'Who Am I?',
+      skills: 'My Skills',
       exp: 'Experience',
       projects: 'My Projects'
     },
@@ -27,7 +28,7 @@ const TRANSLATIONS = {
   },
   FR: {
     titles: {
-      news: 'À propos de moi',
+      news: 'Actualités',
       who: 'Qui suis-je ?',
       skills: 'Mes compétences',
       exp: 'Expérience professionnelle',
@@ -36,6 +37,7 @@ const TRANSLATIONS = {
     nav: {
       news: 'Actualités',
       who: 'Qui suis-je ?',
+      skills: 'Mes compétences',
       exp: 'Expérience',
       projects: 'Mes projets'
     },
@@ -51,7 +53,7 @@ const TRANSLATIONS = {
   },
   UA: {
     titles: {
-      news: 'Про мене',
+      news: 'Новини',
       who: 'Хто я?',
       skills: 'Мої навички',
       exp: 'Професійний досвід',
@@ -60,6 +62,7 @@ const TRANSLATIONS = {
     nav: {
       news: 'Новини',
       who: 'Хто я?',
+      skills: 'Мої навички',
       exp: 'Досвід',
       projects: 'Проєкти'
     },
