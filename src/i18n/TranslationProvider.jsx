@@ -1,138 +1,17 @@
-import React, { createContext, useContext, useMemo, useState, useEffect } from 'react'
+import React, { createContext, useContext, useMemo, useState, useEffect, useCallback } from 'react'
+import TRANSLATIONS from './translations.json'
 
-const TRANSLATIONS = {
-  EN: {
-    titles: {
-      news: 'News',
-      who: 'Who am I?',
-      skills: 'My skills',
-      exp: 'Professional experience',
-      projects: 'My Projects'
-    },
-    nav: {
-      news: 'Whats New',
-      who: 'Who Am I?',
-      skills: 'My Skills',
-      exp: 'Experience',
-      projects: 'My Projects'
-    },
-    bio: [
-      "I'm a 26-year-old front-end developer based in Namur, Belgium — with a soul caught somewhere between code and poetry. I see interfaces the way others see paintings: every pixel a brushstroke, every animation a breath of life.",
-      "I love building things that feel as beautiful as they function. Writing code isn't just technical work for me — it's a form of expression, a way to turn invisible ideas into something people can actually touch and feel. When I'm not deep in a project, you'll find me lost in a book, drawing, or listening to music that makes the world feel a little bigger.",
-    ],
-    news: [
-      { date: '02.06.26', text: 'Completed internship at NezZen' },
-      { date: '13.05.26', text: 'Built a Chrome extension to manage Jimdo with a new design, for non-programmers' },
-      { date: '07.04.26', text: 'Started internship (stage) at NezZen' },
-      { date: '20.03.26', text: 'Started building this portfolio (React)' },
-      { date: '24.02.26', text: 'Started working with Figma on my own initiative, proposed a new design for NezZen' },
-      { date: '15.12.25', text: 'Completed Front-end Developer formation at CEPEGRA' },
-      { date: '18.11.25', text: 'Started plan-culture-front project' },
-      { date: '10.09.25', text: 'Explored React in a dedicated practice repo' },
-      { date: '01.09.25', text: 'Built Nuxt projects (Jamstack + Auth/SSR)' },
-      { date: '26.08.25', text: 'Built PWA, Vue notifications & articles apps' },
-      { date: '14.07.25', text: 'Built Vue quiz app & JS game exercise' },
-      { date: '24.06.25', text: 'Built a PHP demo project' },
-      { date: '28.05.25', text: 'Built "airport" React app' },
-      { date: '12.05.25', text: 'Started Front-end Developer formation at CEPEGRA' },
-      { date: '25.04.25', text: 'Completed Web Design formation' },
-      { date: '10.04.25', text: 'Started Web Design formation' },
-    ],
-    jobs: [
-      { role: 'Front-end Developer', company: 'CEPEGRA · Training program', period: 'May 2025 – Dec 2025' },
-      { role: 'Front-end Developer', company: 'PlayZone', period: 'Nov 2025 – Dec 2025' },
-      { role: 'Web Designer', company: 'Sante Group Companies · Internship', period: 'Sep 2023 – Dec 2023' },
-      { role: 'Junior Programmer', company: 'Fozzy Group · Internship', period: 'Sep 2019 – May 2020' },
-    ]
-  },
-  FR: {
-    titles: {
-      news: 'Actualités',
-      who: 'Qui suis-je ?',
-      skills: 'Mes compétences',
-      exp: 'Expérience professionnelle',
-      projects: 'Mes projets'
-    },
-    nav: {
-      news: 'Actualités',
-      who: 'Qui suis-je ?',
-      skills: 'Mes compétences',
-      exp: 'Expérience',
-      projects: 'Mes projets'
-    },
-    bio: [
-      "J'ai 26 ans, je suis développeuse front-end basée à Namur, en Belgique — avec une âme partagée entre le code et la poésie. Je vois les interfaces comme d'autres voient des tableaux : chaque pixel un coup de pinceau, chaque animation un souffle de vie.",
-      "J'aime créer des choses aussi belles que fonctionnelles. Écrire du code n'est pas qu'un travail technique pour moi — c'est une forme d'expression, une façon de transformer des idées invisibles en quelque chose que les gens peuvent réellement toucher et ressentir. Quand je ne suis pas plongée dans un projet, vous me trouverez perdue dans un livre, en train de dessiner, ou à écouter de la musique qui rend le monde un peu plus grand.",
-    ],
-    news: [
-      { date: '02.06.26', text: 'Fin du stage chez NezZen' },
-      { date: '13.05.26', text: "Développement d'une extension Chrome pour gérer Jimdo avec un nouveau design, pour les non-développeurs" },
-      { date: '07.04.26', text: 'Début du stage chez NezZen' },
-      { date: '20.03.26', text: 'Début de la création de ce portfolio (React)' },
-      { date: '24.02.26', text: "Début du travail avec Figma de ma propre initiative, proposition d'un nouveau design pour NezZen" },
-      { date: '15.12.25', text: 'Formation Développeur Front-end terminée au CEPEGRA' },
-      { date: '18.11.25', text: 'Début du projet plan-culture-front' },
-      { date: '10.09.25', text: "Exploration de React dans un dépôt d'entraînement dédié" },
-      { date: '01.09.25', text: 'Développement de projets Nuxt (Jamstack + Auth/SSR)' },
-      { date: '26.08.25', text: "Développement d'une PWA, d'une app de notifications et d'articles en Vue" },
-      { date: '14.07.25', text: "Développement d'un quiz Vue et d'un exercice de jeu en JS" },
-      { date: '24.06.25', text: 'Développement d\'un projet de démonstration PHP' },
-      { date: '28.05.25', text: 'Développement de l\'application React « airport »' },
-      { date: '12.05.25', text: 'Début de la formation Développeur Front-end au CEPEGRA' },
-      { date: '25.04.25', text: 'Formation Web Design terminée' },
-      { date: '10.04.25', text: 'Début de la formation Web Design' },
-    ],
-    jobs: [
-      { role: 'Développeur front-end', company: 'CEPEGRA · Formation', period: 'May 2025 – Dec 2025' },
-      { role: 'Développeur front-end', company: 'PlayZone', period: 'Nov 2025 – Dec 2025' },
-      { role: 'Designer Web', company: 'Sante Group Companies · Stage', period: 'Sep 2023 – Dec 2023' },
-      { role: 'Programmeur junior', company: 'Fozzy Group · Stage', period: 'Sep 2019 – May 2020' },
-    ]
-  },
-  UA: {
-    titles: {
-      news: 'Новини',
-      who: 'Хто я?',
-      skills: 'Мої навички',
-      exp: 'Професійний досвід',
-      projects: 'Мої проєкти'
-    },
-    nav: {
-      news: 'Новини',
-      who: 'Хто я?',
-      skills: 'Мої навички',
-      exp: 'Досвід',
-      projects: 'Проєкти'
-    },
-    bio: [
-      'Мені 26 років, я фронтенд-розробниця з Намюра, Бельгія — з душею, що балансує між кодом і поезією. Я бачу інтерфейси так, як інші бачать картини: кожен піксель — мазок пензля, кожна анімація — подих життя.',
-      'Я люблю створювати речі, які виглядають так само гарно, як і працюють. Написання коду для мене — це не просто технічна робота, а форма самовираження, спосіб перетворити невидимі ідеї на щось, що люди можуть відчути й доторкнутися. Коли я не занурена в проєкт, мене можна знайти за книгою, за малюванням або за прослуховуванням музики, яка робить світ трохи більшим.',
-    ],
-    news: [
-      { date: '02.06.26', text: 'Завершила стажування в NezZen' },
-      { date: '13.05.26', text: 'Розробила розширення для Chrome для керування Jimdo з новим дизайном, для непрограмістів' },
-      { date: '07.04.26', text: 'Почала стажування в NezZen' },
-      { date: '20.03.26', text: 'Почала створювати це портфоліо (React)' },
-      { date: '24.02.26', text: 'Почала працювати з Figma за власною ініціативою, запропонувала новий дизайн для NezZen' },
-      { date: '15.12.25', text: 'Завершила навчання на Front-end розробника в CEPEGRA' },
-      { date: '18.11.25', text: 'Почала проєкт plan-culture-front' },
-      { date: '10.09.25', text: 'Досліджувала React у окремому навчальному репозиторії' },
-      { date: '01.09.25', text: 'Створила проєкти на Nuxt (Jamstack + Auth/SSR)' },
-      { date: '26.08.25', text: 'Створила PWA, застосунки для сповіщень та статей на Vue' },
-      { date: '14.07.25', text: 'Створила Vue-квіз та JS-гру для практики' },
-      { date: '24.06.25', text: 'Створила демо-проєкт на PHP' },
-      { date: '28.05.25', text: 'Створила застосунок "airport" на React' },
-      { date: '12.05.25', text: 'Почала навчання на Front-end розробника в CEPEGRA' },
-      { date: '25.04.25', text: 'Завершила навчання з веб-дизайну' },
-      { date: '10.04.25', text: 'Почала навчання з веб-дизайну' },
-    ],
-    jobs: [
-      { role: 'Фронтенд-розробниця', company: 'CEPEGRA · Навчання', period: 'May 2025 – Dec 2025' },
-      { role: 'Фронтенд-розробниця', company: 'PlayZone', period: 'Nov 2025 – Dec 2025' },
-      { role: 'Веб-дизайнерка', company: 'Sante Group Companies · Стажування', period: 'Sep 2023 – Dec 2023' },
-      { role: 'Молодший програміст', company: 'Fozzy Group · Стажування', period: 'Sep 2019 – May 2020' },
-    ]
-  }
+const LANG_COOKIE = 'lang'
+
+function readLangCookie() {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${LANG_COOKIE}=([^;]*)`))
+  const value = match && decodeURIComponent(match[1])
+  return value && TRANSLATIONS[value] ? value : null
+}
+
+function writeLangCookie(lang) {
+  // 1 year expiry so the choice survives across visits, not just this session
+  document.cookie = `${LANG_COOKIE}=${encodeURIComponent(lang)}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`
 }
 
 const TranslationContext = createContext({
@@ -142,7 +21,14 @@ const TranslationContext = createContext({
 })
 
 export function TranslationProvider({ children, defaultLang = 'EN' }) {
-  const [lang, setLang] = useState(defaultLang)
+  const [lang, setLangState] = useState(() => {
+    try { return readLangCookie() || defaultLang } catch (e) { return defaultLang }
+  })
+
+  const setLang = useCallback((nextLang) => {
+    setLangState(nextLang)
+    try { writeLangCookie(nextLang) } catch (e) { }
+  }, [])
 
   useEffect(() => {
     try { document.documentElement.lang = String(lang).toLowerCase() } catch (e) { }
