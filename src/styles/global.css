@@ -28,6 +28,18 @@ body {
   overflow-x: hidden; /* no horizontal scroll */
 }
 
+/* ── Root layout ──────────────────────────────
+     #root holds the shell (sidebar + main) and the
+     footer as direct children. Flex + space-between
+     pins the footer to the bottom of the viewport
+     instead of pushing the page height past 100vh. */
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
 /* ── Scrollbar ────────────────────────────────
      Custom purple scrollbar (Chrome/Edge only)   */
 ::-webkit-scrollbar {
@@ -85,13 +97,13 @@ body {
   position: relative;
   z-index: 1; /* above the glow blobs */
   max-width: 1020px;
+  width: 100%;
   margin: 0 auto; /* center the layout */
   padding: 52px 36px 60px;
   display: grid;
   grid-template-columns: 220px 1fr;
   grid-template-rows: auto 1fr;
   gap: 0 52px; /* 52px gap between sidebar and main */
-  min-height: 100vh;
 }
 
 /* ── Language switcher row ────────────────────
@@ -196,6 +208,18 @@ body {
   letter-spacing: 0.06em;
   font-style: italic;
   margin-top: 4px;
+}
+.sidebar-intro-status {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(92, 191, 124, 0.14);
+  border: 1px solid rgba(92, 191, 124, 0.32);
+  color: #6fd99a;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* Navigation */
@@ -658,19 +682,6 @@ footer {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-}
-.footer-name {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--text-accent);
-}
-.footer-tagline {
-  font-size: 13px;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-  font-style: italic;
 }
 .footer-links {
   display: flex;

@@ -40,6 +40,7 @@ export default function Sidebar({ activeSection, onNavigate, t }) {
       <div className="sidebar-intro">
         <div className="sidebar-intro-name">Polina Bevz</div>
         <div className="sidebar-intro-tagline">Front-end developer</div>
+        <div className="sidebar-intro-status">Open to work</div>
       </div>
 
       {/* ── Navigation ── */}

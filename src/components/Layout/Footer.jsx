@@ -1,19 +1,12 @@
 // ─────────────────────────────────────────────
 // Footer.jsx — Bottom bar always visible on the page
-// Contains: your name, tagline, and contact links
+// Contains: contact links only — name/tagline already
+// shown in the sidebar, no need to repeat them here.
 //
 // No props needed — this component is static.
-// Just update the LINKS array and NAME below
-// to personalize it with your real info.
+// Just update the LINKS array below to personalize
+// it with your real info.
 // ─────────────────────────────────────────────
-
-import { useTranslation } from '../../i18n/TranslationProvider'
-
-// Your display name shown in the footer
-const NAME = 'Polina Bevz'
-
-// Your tagline shown below your name
-const TAGLINE = 'Front-end Developer · Open to work'
 
 // All your contact/social links.
 // To add a new one, add an object to this array with:
@@ -23,7 +16,7 @@ const TAGLINE = 'Front-end Developer · Open to work'
 const LINKS = [
   {
     label: 'polya.bevz02@gmail.com',
-    href: 'polya.bevz02@gmail.com',
+    href: 'mailto:polya.bevz02@gmail.com',
     icon: (
       // Email icon
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -54,19 +47,10 @@ const LINKS = [
   },
 ]
 
-export default function Footer({ t }) {
-  const { t: ctxT } = useTranslation()
-  const translate = t || ctxT
-
+export default function Footer() {
   return (
     <footer>
       <div className="footer-inner">
-
-        {/* Your name */}
-        <div className="footer-name">{NAME}</div>
-
-        {/* Tagline */}
-        <div className="footer-tagline">{translate('footer.tagline') || TAGLINE}</div>
 
         {/* Contact links — one button per item in LINKS array */}
         <div className="footer-links">
