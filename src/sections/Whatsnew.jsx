@@ -45,35 +45,17 @@ export default function WhatsNew() {
 
   return (
     <div className="card">
-      <div className="timeline-header">
-        <span className="timeline-count">
-          {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, UPDATES.length)} of {UPDATES.length}
-        </span>
-        <div className="timeline-arrows">
-          <button
-            type="button"
-            className="timeline-arrow-btn"
-            disabled={!canScrollUp}
-            onClick={() => setStartIndex(i => Math.max(0, i - 1))}
-            aria-label="Show newer updates"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="18 15 12 9 6 15" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            className="timeline-arrow-btn"
-            disabled={!canScrollDown}
-            onClick={() => setStartIndex(i => Math.min(UPDATES.length - PAGE_SIZE, i + 1))}
-            aria-label="Show older updates"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <button
+        type="button"
+        className="timeline-arrow-btn timeline-arrow-btn--top"
+        disabled={!canScrollUp}
+        onClick={() => setStartIndex(i => Math.max(0, i - 1))}
+        aria-label="Show newer updates"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="18 15 12 9 6 15" />
+        </svg>
+      </button>
 
       {visibleUpdates.map((item, index) => (
         <div
@@ -89,6 +71,18 @@ export default function WhatsNew() {
           <span className="timeline-text">{item.text}</span>
         </div>
       ))}
+
+      <button
+        type="button"
+        className="timeline-arrow-btn timeline-arrow-btn--bottom"
+        disabled={!canScrollDown}
+        onClick={() => setStartIndex(i => Math.min(UPDATES.length - PAGE_SIZE, i + 1))}
+        aria-label="Show older updates"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
     </div>
   )
 }

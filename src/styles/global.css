@@ -289,30 +289,14 @@ nav {
 /* ── Shared row styles ────────────────────────
      Used in timeline, experience, projects        */
 
-/* Timeline header — row count + up/down arrows (Whats New section) */
-.timeline-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(124, 92, 191, 0.12);
-}
-.timeline-count {
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
-.timeline-arrows {
-  display: flex;
-  gap: 6px;
-}
+/* Up/down arrows (Whats New section) — sit above and below the row list */
 .timeline-arrow-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
   background: rgba(124, 92, 191, 0.1);
   border: 1px solid var(--border);
   border-radius: 50%;
@@ -323,9 +307,15 @@ nav {
     border-color var(--transition-fast),
     opacity var(--transition-fast);
 }
+.timeline-arrow-btn--top {
+  margin-bottom: 12px;
+}
+.timeline-arrow-btn--bottom {
+  margin-top: 12px;
+}
 .timeline-arrow-btn svg {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
 }
 .timeline-arrow-btn:hover:not(:disabled) {
   background: rgba(124, 60, 191, 0.22);
