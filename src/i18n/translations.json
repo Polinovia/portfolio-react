@@ -15,8 +15,9 @@
       "projects": "My Projects"
     },
     "bio": [
-      "I'm a 26-year-old front-end developer based in Namur, Belgium - with a soul caught somewhere between code and poetry. I see interfaces the way others see paintings: every pixel a brushstroke, every animation a breath of life.",
-      "I love building things that feel as beautiful as they function. Writing code isn't just technical work for me - it's a form of expression, a way to turn invisible ideas into something people can actually touch and feel. When I'm not deep in a project, you'll find me lost in a book, drawing, or listening to music that makes the world feel a little bigger."
+      "I'm a 26-year-old front-end developer based in Namur, Belgium, working across React, Vue, Nuxt, and Figma. I've always been creative at heart, and for me coding is just another way to express that - a way to turn ideas into something people can see, use, and feel.",
+      "What I love most is the craft side of the work - getting the spacing, color, and motion just right until an interface feels alive rather than just functional. I'm curious by nature and learn best by doing, often picking up new tools and techniques on my own initiative rather than waiting to be taught.",
+      "Outside of code, I'm always looking for new ways to express myself: through collage, drawing, writing, or getting lost in music. Right now, I'm excited to bring that mix of curiosity and craft to a new team and the next chapter of my career."
     ],
     "news": [
       { "date": "02.06.26", "text": "Completed internship at NezZen" },
@@ -60,8 +61,9 @@
       "projects": "Mes projets"
     },
     "bio": [
-      "J'ai 26 ans, je suis développeuse front-end basée à Namur, en Belgique - avec une âme partagée entre le code et la poésie. Je vois les interfaces comme d'autres voient des tableaux : chaque pixel un coup de pinceau, chaque animation un souffle de vie.",
-      "J'aime créer des choses aussi belles que fonctionnelles. Écrire du code n'est pas qu'un travail technique pour moi - c'est une forme d'expression, une façon de transformer des idées invisibles en quelque chose que les gens peuvent réellement toucher et ressentir. Quand je ne suis pas plongée dans un projet, vous me trouverez perdue dans un livre, en train de dessiner, ou à écouter de la musique qui rend le monde un peu plus grand."
+      "J'ai 26 ans, je suis développeuse front-end basée à Namur, en Belgique, et je travaille avec React, Vue, Nuxt et Figma. J'ai toujours été créative de nature, et pour moi coder n'est qu'une autre façon d'exprimer cela - une manière de transformer des idées en quelque chose que les gens peuvent voir, utiliser et ressentir.",
+      "Ce que j'aime le plus, c'est le côté artisanal du métier - ajuster les espacements, les couleurs et les animations jusqu'à ce qu'une interface semble vivante plutôt que simplement fonctionnelle. Je suis curieuse de nature et j'apprends mieux en pratiquant, souvent en explorant de nouveaux outils et techniques de ma propre initiative plutôt qu'en attendant qu'on me les enseigne.",
+      "En dehors du code, je cherche toujours de nouvelles façons de m'exprimer : par le collage, le dessin, l'écriture, ou en me perdant dans la musique. En ce moment, j'ai hâte d'apporter ce mélange de curiosité et de savoir-faire à une nouvelle équipe et au prochain chapitre de ma carrière."
     ],
     "news": [
       { "date": "02.06.26", "text": "Fin du stage chez NezZen" },
@@ -105,8 +107,9 @@
       "projects": "Проєкти"
     },
     "bio": [
-      "Мені 26 років, я фронтенд-розробниця з Намюра, Бельгія - з душею, що балансує між кодом і поезією. Я бачу інтерфейси так, як інші бачать картини: кожен піксель - мазок пензля, кожна анімація - подих життя.",
-      "Я люблю створювати речі, які виглядають так само гарно, як і працюють. Написання коду для мене - це не просто технічна робота, а форма самовираження, спосіб перетворити невидимі ідеї на щось, що люди можуть відчути й доторкнутися. Коли я не занурена в проєкт, мене можна знайти за книгою, за малюванням або за прослуховуванням музики, яка робить світ трохи більшим."
+      "Мені 26 років, я фронтенд-розробниця, живу в Намюрі (Бельгія) і працюю з React, Vue, Nuxt та Figma. Творчість завжди була частиною мого життя, і код для мене - ще один спосіб її проявити: перетворювати ідеї на щось, що люди можуть побачити, використати й відчути.",
+      "Найбільше мені подобається саме творча частина роботи - підбирати відступи, кольори й анімацію так, щоб інтерфейс відчувався живим, а не просто робочим. Я допитлива за вдачею і найкраще навчаюся на практиці: часто освоюю нові інструменти й техніки сама, з власної ініціативи, а не чекаю, поки мене цього навчать.",
+      "А поза роботою я постійно шукаю нові способи виразити себе - через колаж, малювання, письмо чи музику, в яку можна поринути з головою. Зараз мені хочеться принести цю суміш допитливості й майстерності в нову команду й новий етап моєї кар'єри."
     ],
     "news": [
       { "date": "02.06.26", "text": "Завершила стажування в NezZen" },
