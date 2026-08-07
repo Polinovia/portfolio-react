@@ -1,5 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ProjectCard from '../components/UI/Projectcard'
+
+// Must match .project-carousel-item / .carousel-arrow sizing in global.css
+const CARD_WIDTH = 260
+const CARD_GAP = 18
+const ARROW_WIDTH = 34
+const ARROW_GAP = 8
 
 // ── Projects data ──────────────────────────────
 // Each object = one project card.
@@ -7,9 +13,10 @@ import ProjectCard from '../components/UI/Projectcard'
 // - tech:        tech stack shown below the name
 // - description: one-line summary of what the project does
 // - category:    'dev' | 'design' - used for the badge color
-// - folder:      which tech-stack dossier the project is filed under
+// - folder:      tech stack - used for the placeholder thumbnail color when there's no image
 // - url:         GitHub (or Figma) link
 // - previewUrl:  live demo link, if there is one
+// - image:       real screenshot, if there is one (falls back to a tech-colored placeholder)
 const PROJECTS = [
   {
     name: 'NezZen',
@@ -18,6 +25,7 @@ const PROJECTS = [
     category: 'design',
     folder: 'Figma',
     url: 'https://www.figma.com/design/9FhPm5Ric9S2FQj2Syr1J6/NezZen?node-id=0-1&t=6BQBuoPJaaO8kriO-1',
+    image: '/assets/projects/nezzen.png',
   },
   {
     name: 'Portfolio',
@@ -26,6 +34,7 @@ const PROJECTS = [
     category: 'design',
     folder: 'Figma',
     url: 'https://www.figma.com/design/a3iytrjfRqUQUAZfDZg4Mq/Portfolio?node-id=0-1&t=UVWcuWniWx7Z3pIY-1',
+    image: '/assets/projects/portfolio-figma.png',
   },
   {
     name: '12.05',
@@ -50,7 +59,7 @@ const PROJECTS = [
     category: 'dev',
     folder: 'React',
     url: 'https://github.com/Polinovia/airport',
-    previewUrl: 'https://courir-ex.netlify.app/',
+    image: '/assets/projects/airport.png',
   },
   {
     name: 'articles-vue',
@@ -69,6 +78,7 @@ const PROJECTS = [
     folder: 'JavaScript',
     url: 'https://github.com/Polinovia/exercice-front',
     previewUrl: 'https://jeuphrasesbevz.netlify.app/',
+    image: '/assets/projects/exercice-front.png',
   },
   {
     name: 'front_quiestla',
@@ -78,6 +88,7 @@ const PROJECTS = [
     folder: 'Vue',
     url: 'https://github.com/Polinovia/front_quiestla',
     previewUrl: 'https://quiestla-polina.netlify.app/',
+    image: '/assets/projects/front_quiestla.png',
   },
   {
     name: 'jamstack-nuxt',
@@ -87,6 +98,7 @@ const PROJECTS = [
     folder: 'Nuxt',
     url: 'https://github.com/Polinovia/jamstack-nuxt',
     previewUrl: 'https://nuxtdyn.netlify.app/',
+    image: '/assets/projects/jamstack-nuxt.png',
   },
   {
     name: 'my-nuxt-auth',
@@ -95,6 +107,26 @@ const PROJECTS = [
     category: 'dev',
     folder: 'Nuxt',
     url: 'https://github.com/Polinovia/my-nuxt-auth',
+    previewUrl: 'https://courir-ex.netlify.app/',
+    image: '/assets/projects/my-nuxt-auth.png',
+  },
+  {
+    name: 'plan-culture-front',
+    tech: 'Vue · Planning · UI',
+    description: 'A Vue front-end for planning crops and tracking plant harvests.',
+    category: 'dev',
+    folder: 'Vue',
+    url: 'https://github.com/Polinovia/plan-culture-front',
+  },
+  {
+    name: 'Urbex-Project-FRONT',
+    tech: 'Vue · Exploration Game · Group Project',
+    description: 'A Vue exploration game where players discover and navigate abandoned urban sites - built as a team project at the end of our formation.',
+    category: 'dev',
+    folder: 'Vue',
+    url: 'https://github.com/mplscrummaster/Urbex-Project-FRONT',
+    previewUrl: 'https://michonmaximilien.dev/urbex-front/',
+    image: '/assets/projects/urbex-project-front.png',
   },
   {
     name: 'notif_avec_vue',
@@ -131,66 +163,77 @@ const PROJECTS = [
   },
 ]
 
-// Folder display order - keeps the list stable instead of relying on
-// first-seen order in PROJECTS.
-const FOLDER_ORDER = ['React', 'Vue', 'Nuxt', 'JavaScript', 'HTML', 'PHP', 'PWA', 'Figma']
-
-// Group projects by their `folder` field, following FOLDER_ORDER.
-const FOLDERS = FOLDER_ORDER
-  .map(name => ({ name, projects: PROJECTS.filter(p => p.folder === name) }))
-  .filter(folder => folder.projects.length > 0)
-
 export default function Projects() {
-  // openFolder holds the name of the currently expanded folder (only one at a time).
-  const [openFolder, setOpenFolder] = useState(null)
+  const carouselRef = useRef(null)
+  const trackRef = useRef(null)
+  const [viewportWidth, setViewportWidth] = useState(null)
+
+  // Clip the viewport to a width that fits a whole number of cards, so no
+  // card is ever half-visible at the edge - it either fully shows or scrolls off.
+  useEffect(() => {
+    const el = carouselRef.current
+    if (!el) return
+
+    const recompute = () => {
+      const available = el.clientWidth - 2 * (ARROW_WIDTH + ARROW_GAP)
+      const cardsPerView = Math.max(1, Math.floor((available + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
+      setViewportWidth(cardsPerView * (CARD_WIDTH + CARD_GAP) - CARD_GAP)
+    }
+
+    recompute()
+    const observer = new ResizeObserver(recompute)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const scrollByCards = (direction) => {
+    const track = trackRef.current
+    if (!track) return
+    track.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: 'smooth' })
+  }
 
   return (
-    <div>
-      {FOLDERS.map((folder, index) => {
-        const isOpen = openFolder === folder.name
-        return (
-          <div
-            key={folder.name}
-            className="project-folder"
-            style={{ animationDelay: `${index * 0.05}s` }}
-          >
-            <button
-              type="button"
-              className={`project-folder-header${isOpen ? ' open' : ''}`}
-              onClick={() => setOpenFolder(isOpen ? null : folder.name)}
-              aria-expanded={isOpen}
-            >
-              <svg className="project-folder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
-              </svg>
+    <div className="project-carousel" ref={carouselRef}>
+      <button
+        type="button"
+        className="carousel-arrow carousel-arrow--prev"
+        onClick={() => scrollByCards(-1)}
+        aria-label="Scroll projects left"
+      >
+        ‹
+      </button>
 
-              <span className="project-folder-name">{folder.name}</span>
-              <span className="project-folder-count">{folder.projects.length}</span>
+      <div
+        className="project-carousel-viewport"
+        style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
+      >
+        <div className="project-carousel-track" ref={trackRef}>
+          {PROJECTS.map((project, index) => (
+            <div className="project-carousel-item" key={project.name}>
+              <ProjectCard
+                name={project.name}
+                tech={project.tech}
+                description={project.description}
+                category={project.category}
+                folder={project.folder}
+                url={project.url}
+                previewUrl={project.previewUrl}
+                image={project.image}
+                delay={index * 0.05}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
-              <svg className="project-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 6 15 12 9 18" />
-              </svg>
-            </button>
-
-            {isOpen && (
-              <div className="project-folder-body project-grid">
-                {folder.projects.map((project, projectIndex) => (
-                  <ProjectCard
-                    key={project.name}
-                    name={project.name}
-                    tech={project.tech}
-                    description={project.description}
-                    category={project.category}
-                    url={project.url}
-                    previewUrl={project.previewUrl}
-                    delay={projectIndex * 0.05}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )
-      })}
+      <button
+        type="button"
+        className="carousel-arrow carousel-arrow--next"
+        onClick={() => scrollByCards(1)}
+        aria-label="Scroll projects right"
+      >
+        ›
+      </button>
     </div>
   )
 }

@@ -4,13 +4,36 @@ const BADGE_LABELS = {
   wordpress: 'WordPress',
 }
 
-export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl }) {
+// Tech-colored placeholder shown when a project has no real screenshot yet.
+const FOLDER_LABELS = {
+  React: 'React',
+  Vue: 'Vue',
+  Nuxt: 'Nuxt',
+  JavaScript: 'JS',
+  HTML: 'HTML',
+  PHP: 'PHP',
+  PWA: 'PWA',
+  Figma: 'Figma',
+}
+
+export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl, image, folder }) {
   return (
     <div
       className="project-card"
       // animation-delay staggers the cards so they appear one by one
       style={{ animationDelay: `${delay}s` }}
     >
+      {/* Preview: real screenshot if we have one, otherwise a tech-colored placeholder */}
+      {image ? (
+        <div className="project-thumb">
+          <img src={image} alt={`${name} preview`} loading="lazy" />
+        </div>
+      ) : (
+        <div className={`project-thumb project-thumb-placeholder thumb-${(folder || 'other').toLowerCase()}`}>
+          <span>{FOLDER_LABELS[folder] || folder}</span>
+        </div>
+      )}
+
       {/* Top row: badge */}
       <div className="project-card-top">
         <span className={`project-cat-badge ${category}`}>
