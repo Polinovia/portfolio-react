@@ -167,6 +167,7 @@ export default function Projects() {
   const carouselRef = useRef(null)
   const trackRef = useRef(null)
   const [viewportWidth, setViewportWidth] = useState(null)
+  const [selectedProject, setSelectedProject] = useState(null)
 
   // Clip the viewport to a width that fits a whole number of cards, so no
   // card is ever half-visible at the edge - it either fully shows or scrolls off.
@@ -193,47 +194,91 @@ export default function Projects() {
   }
 
   return (
-    <div className="project-carousel" ref={carouselRef}>
-      <button
-        type="button"
-        className="carousel-arrow carousel-arrow--prev"
-        onClick={() => scrollByCards(-1)}
-        aria-label="Scroll projects left"
-      >
-        ‹
-      </button>
+    <>
+      <div className="project-carousel" ref={carouselRef}>
+        <button
+          type="button"
+          className="carousel-arrow carousel-arrow--prev"
+          onClick={() => scrollByCards(-1)}
+          aria-label="Scroll projects left"
+        >
+          ‹
+        </button>
 
-      <div
-        className="project-carousel-viewport"
-        style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
-      >
-        <div className="project-carousel-track" ref={trackRef}>
-          {PROJECTS.map((project, index) => (
-            <div className="project-carousel-item" key={project.name}>
-              <ProjectCard
-                name={project.name}
-                tech={project.tech}
-                description={project.description}
-                category={project.category}
-                folder={project.folder}
-                url={project.url}
-                previewUrl={project.previewUrl}
-                image={project.image}
-                delay={index * 0.05}
-              />
-            </div>
-          ))}
+        <div
+          className="project-carousel-viewport"
+          style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
+        >
+          <div className="project-carousel-track" ref={trackRef}>
+            {PROJECTS.map((project, index) => (
+              <div className="project-carousel-item" key={project.name}>
+                <ProjectCard
+                  name={project.name}
+                  tech={project.tech}
+                  description={project.description}
+                  category={project.category}
+                  folder={project.folder}
+                  url={project.url}
+                  previewUrl={project.previewUrl}
+                  image={project.image}
+                  delay={index * 0.05}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+
+        <button
+          type="button"
+          className="carousel-arrow carousel-arrow--next"
+          onClick={() => scrollByCards(1)}
+          aria-label="Scroll projects right"
+        >
+          ›
+        </button>
       </div>
 
-      <button
-        type="button"
-        className="carousel-arrow carousel-arrow--next"
-        onClick={() => scrollByCards(1)}
-        aria-label="Scroll projects right"
-      >
-        ›
-      </button>
-    </div>
+      {/* Mobile-only: tappable list, opens a popup with the full card */}
+      <ul className="project-mobile-list">
+        {PROJECTS.map((project) => (
+          <li
+            key={project.name}
+            className="project-mobile-item"
+            onClick={() => setSelectedProject(project)}
+          >
+            <div>
+              <div className="project-mobile-item-name">{project.name}</div>
+              <div className="project-mobile-item-tech">{project.tech}</div>
+            </div>
+            <span className="project-mobile-item-arrow">›</span>
+          </li>
+        ))}
+      </ul>
+
+      {selectedProject && (
+        <div className="project-modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="project-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="project-modal-close"
+              onClick={() => setSelectedProject(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <ProjectCard
+              name={selectedProject.name}
+              tech={selectedProject.tech}
+              description={selectedProject.description}
+              category={selectedProject.category}
+              folder={selectedProject.folder}
+              url={selectedProject.url}
+              previewUrl={selectedProject.previewUrl}
+              image={selectedProject.image}
+            />
+          </div>
+        </div>
+      )}
+    </>
   )
 }
