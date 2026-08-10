@@ -52,7 +52,7 @@ export default function ProjectCard({ name, tech, description, category, delay =
       {description && <p className="project-description">{description}</p>}
 
       {/* Links */}
-      <div className="project-actions">
+      <div className="project-actions" onClick={(e) => e.stopPropagation()}>
         <a href={url || '#'} target="_blank" rel="noreferrer" className="project-link">
           Repo
         </a>

@@ -524,6 +524,7 @@ nav {
   flex: 0 0 260px;
   scroll-snap-align: start;
   display: flex;
+  cursor: pointer;
 }
 .project-carousel-item .project-card {
   width: 100%;
@@ -750,6 +751,8 @@ nav {
   position: relative;
   width: 100%;
   max-width: 380px;
+}
+.project-modal-body {
   max-height: 88vh;
   overflow-y: auto;
 }
@@ -938,6 +941,81 @@ nav {
 .rating-form-submit:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* ── Admin moderation page (/admin) ── */
+.admin-page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  gap: 24px;
+  color: var(--text);
+}
+.admin-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+.admin-login-btn,
+.admin-btn {
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.admin-login-btn:hover,
+.admin-btn:hover {
+  border-color: var(--border-hover);
+}
+.admin-pending-list {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.admin-pending-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.admin-pending-slug {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+.admin-pending-comment {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+.admin-pending-actions {
+  display: flex;
+  gap: 8px;
+}
+.admin-btn-approve {
+  color: #7cd992;
+  border-color: rgba(124, 217, 146, 0.4);
+}
+.admin-btn-reject {
+  color: #e2726b;
+  border-color: rgba(226, 114, 107, 0.4);
+}
+.admin-empty {
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 /* ── Footer ───────────────────────────────────
