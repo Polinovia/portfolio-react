@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  functions = "netlify/functions"
+
+[dev]
+  command = "set PORT=3001 && npx react-scripts start"
+  framework = "create-react-app"
+  targetPort = 3001
+
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200

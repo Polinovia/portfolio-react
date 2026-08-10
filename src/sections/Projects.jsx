@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import ProjectCard from '../components/UI/Projectcard'
+import ProjectRatings from '../components/UI/ProjectRatings'
 
 // Must match .project-carousel-item / .carousel-arrow sizing in global.css
 const CARD_WIDTH = 260
@@ -20,6 +21,7 @@ const ARROW_GAP = 8
 const PROJECTS = [
   {
     name: 'Who Where What',
+    slug: 'who-where-what',
     tech: 'TypeScript · Browser Game · EN/FR',
     description: 'A multilingual (EN/FR) browser game where friends build an absurd story together, designed from scratch in Figma before being coded and deployed.',
     category: 'dev',
@@ -30,6 +32,7 @@ const PROJECTS = [
   },
   {
     name: 'NezZen',
+    slug: 'nezzen',
     tech: 'Figma · UI Design',
     description: 'New UI design proposal for the NezZen product, built and iterated on in Figma.',
     category: 'design',
@@ -39,6 +42,7 @@ const PROJECTS = [
   },
   {
     name: 'Portfolio',
+    slug: 'portfolio-figma',
     tech: 'Figma · UI Design',
     description: 'Figma design mockups for this very portfolio, before it became a React app.',
     category: 'design',
@@ -48,6 +52,7 @@ const PROJECTS = [
   },
   {
     name: '15.05',
+    slug: '15-05',
     tech: 'JavaScript · Interaction',
     description: 'A small JavaScript exercise focused on DOM manipulation and interactivity.',
     category: 'dev',
@@ -56,6 +61,7 @@ const PROJECTS = [
   },
   {
     name: 'airport',
+    slug: 'airport',
     tech: 'React · API · UI',
     description: 'A React app that browses flights via a public API with a clean, responsive UI.',
     category: 'dev',
@@ -65,6 +71,7 @@ const PROJECTS = [
   },
   {
     name: 'articles-vue',
+    slug: 'articles-vue',
     tech: 'Vue · Content · Articles',
     description: 'A Vue app for browsing and reading articles, with a focus on content layout.',
     category: 'dev',
@@ -74,6 +81,7 @@ const PROJECTS = [
   },
   {
     name: 'exercice-front',
+    slug: 'exercice-front',
     tech: 'JavaScript · Game · UI',
     description: 'A small JavaScript game exercise built to practice logic and UI state.',
     category: 'dev',
@@ -84,6 +92,7 @@ const PROJECTS = [
   },
   {
     name: 'front_quiestla',
+    slug: 'front-quiestla',
     tech: 'Vue · Responsive · UI',
     description: 'A responsive Vue front-end built around a "who is it" style UI.',
     category: 'dev',
@@ -94,6 +103,7 @@ const PROJECTS = [
   },
   {
     name: 'jamstack-nuxt',
+    slug: 'jamstack-nuxt',
     tech: 'Nuxt · Jamstack · Static',
     description: 'A statically generated Jamstack site built with Nuxt.',
     category: 'dev',
@@ -104,6 +114,7 @@ const PROJECTS = [
   },
   {
     name: 'my-nuxt-auth',
+    slug: 'my-nuxt-auth',
     tech: 'Nuxt · Auth · SSR',
     description: 'A Nuxt app exploring server-side rendering with authenticated routes.',
     category: 'dev',
@@ -114,6 +125,7 @@ const PROJECTS = [
   },
   {
     name: 'plan-culture-front',
+    slug: 'plan-culture-front',
     tech: 'Vue · Planning · UI',
     description: 'A Vue front-end for planning crops and tracking plant harvests.',
     category: 'dev',
@@ -122,6 +134,7 @@ const PROJECTS = [
   },
   {
     name: 'Urbex-Project-FRONT',
+    slug: 'urbex-project-front',
     tech: 'Vue · Exploration Game · Group Project',
     description: 'A Vue exploration game where players discover and navigate abandoned urban sites - built as a team project at the end of our formation.',
     category: 'dev',
@@ -132,6 +145,7 @@ const PROJECTS = [
   },
   {
     name: 'notif_avec_vue',
+    slug: 'notif-avec-vue',
     tech: 'Vue · Notifications · UI',
     description: 'A Vue app demonstrating a real-time notification system and UI.',
     category: 'dev',
@@ -140,6 +154,7 @@ const PROJECTS = [
   },
   {
     name: 'php-demo',
+    slug: 'php-demo',
     tech: 'PHP · Demo · Backend',
     description: 'A small PHP backend demo covering basic server-side logic.',
     category: 'dev',
@@ -148,6 +163,7 @@ const PROJECTS = [
   },
   {
     name: 'React',
+    slug: 'react-practice',
     tech: 'React · Web App',
     description: 'A React practice repo used to explore components, hooks and routing.',
     category: 'dev',
@@ -156,6 +172,7 @@ const PROJECTS = [
   },
   {
     name: 'wf12-pwa-bpi',
+    slug: 'wf12-pwa-bpi',
     tech: 'PWA · Service Workers · Offline',
     description: 'A Progressive Web App with offline support via service workers.',
     category: 'dev',
@@ -213,7 +230,11 @@ export default function Projects() {
         >
           <div className="project-carousel-track" ref={trackRef}>
             {PROJECTS.map((project, index) => (
-              <div className="project-carousel-item" key={project.name}>
+              <div
+                className="project-carousel-item"
+                key={project.name}
+                onClick={() => setSelectedProject(project)}
+              >
                 <ProjectCard
                   name={project.name}
                   tech={project.tech}
@@ -269,17 +290,20 @@ export default function Projects() {
             >
               ×
             </button>
-            <ProjectCard
-              name={selectedProject.name}
-              tech={selectedProject.tech}
-              description={selectedProject.description}
-              category={selectedProject.category}
-              folder={selectedProject.folder}
-              url={selectedProject.url}
-              previewUrl={selectedProject.previewUrl}
-              figmaUrl={selectedProject.figmaUrl}
-              image={selectedProject.image}
-            />
+            <div className="project-modal-body">
+              <ProjectCard
+                name={selectedProject.name}
+                tech={selectedProject.tech}
+                description={selectedProject.description}
+                category={selectedProject.category}
+                folder={selectedProject.folder}
+                url={selectedProject.url}
+                previewUrl={selectedProject.previewUrl}
+                figmaUrl={selectedProject.figmaUrl}
+                image={selectedProject.image}
+              />
+              <ProjectRatings projectSlug={selectedProject.slug} />
+            </div>
           </div>
         </div>
       )}
