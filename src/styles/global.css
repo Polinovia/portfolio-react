@@ -779,6 +779,167 @@ nav {
   to { opacity: 1; }
 }
 
+/* ── Project ratings & comments (inside .project-modal) ── */
+.project-ratings {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.project-ratings-header {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.project-ratings-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.project-ratings-average-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.project-ratings-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+.project-ratings-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.project-ratings-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.project-ratings-item-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-ratings-item-name {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.project-ratings-item-comment {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.4;
+  margin: 4px 0 0;
+}
+
+/* Star display / picker, reused by the summary line and the form */
+.rating-stars {
+  display: inline-flex;
+  gap: 2px;
+}
+.rating-star {
+  color: var(--border);
+  font-size: 14px;
+  line-height: 1;
+}
+.rating-star.filled {
+  color: #f2b84b;
+}
+.rating-stars--sm .rating-star {
+  font-size: 12px;
+}
+.rating-stars--lg .rating-star {
+  font-size: 20px;
+}
+.rating-stars--interactive .rating-star {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.rating-stars--interactive .rating-star:hover {
+  transform: scale(1.15);
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.rating-form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rating-form-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.rating-form-textarea,
+.rating-form-name {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 8px 10px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.rating-form-textarea:focus,
+.rating-form-name:focus {
+  outline: none;
+  border-color: var(--border-hover);
+}
+.rating-form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.rating-form-error {
+  font-size: 11px;
+  color: #e2726b;
+  margin: 0;
+}
+.rating-form-thanks {
+  font-size: 12px;
+  color: var(--text-accent);
+  margin: 4px 0 0;
+}
+.rating-form-submit {
+  align-self: flex-start;
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(124, 60, 191, 0.16);
+  color: var(--text-accent);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.rating-form-submit:hover {
+  border-color: var(--border-hover);
+}
+.rating-form-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 /* ── Footer ───────────────────────────────────
      Always visible at the bottom of the page     */
 footer {

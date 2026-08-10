@@ -43,7 +43,20 @@
       { "role": "Web Designer", "company": "CEPEGRA · Training program", "period": "10 – 25 Apr 2025" },
       { "role": "Web Designer", "company": "Sante Group Companies · Internship", "period": "Sep 2023 – Dec 2023" },
       { "role": "Junior Programmer", "company": "Fozzy Group · Internship", "period": "Sep 2019 – May 2020" }
-    ]
+    ],
+    "ratings": {
+      "title": "Ratings & comments",
+      "yourRating": "Your rating",
+      "commentPlaceholder": "Leave a comment (optional)",
+      "nameOptional": "Your name (optional)",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "thanks": "Thanks! Your rating is pending review.",
+      "errorStars": "Please pick a star rating.",
+      "errorGeneric": "Something went wrong, please try again.",
+      "outOf5": "out of 5",
+      "noRatingsYet": "No ratings yet - be the first!"
+    }
   },
   "FR": {
     "titles": {
@@ -89,7 +102,20 @@
       { "role": "Designer Web", "company": "CEPEGRA · Formation", "period": "10 – 25 avr. 2025" },
       { "role": "Designer Web", "company": "Sante Group Companies · Stage", "period": "Sep 2023 – Dec 2023" },
       { "role": "Programmeur junior", "company": "Fozzy Group · Stage", "period": "Sep 2019 – May 2020" }
-    ]
+    ],
+    "ratings": {
+      "title": "Avis et commentaires",
+      "yourRating": "Votre note",
+      "commentPlaceholder": "Laissez un commentaire (facultatif)",
+      "nameOptional": "Votre nom (facultatif)",
+      "submit": "Envoyer",
+      "submitting": "Envoi...",
+      "thanks": "Merci ! Votre avis est en attente de validation.",
+      "errorStars": "Merci de choisir une note.",
+      "errorGeneric": "Une erreur est survenue, veuillez réessayer.",
+      "outOf5": "sur 5",
+      "noRatingsYet": "Pas encore d'avis - soyez le premier !"
+    }
   },
   "UA": {
     "titles": {
@@ -135,6 +161,19 @@
       { "role": "Веб-дизайнерка", "company": "CEPEGRA · Навчання", "period": "10 – 25 квіт. 2025" },
       { "role": "Веб-дизайнерка", "company": "Sante Group Companies · Стажування", "period": "Sep 2023 – Dec 2023" },
       { "role": "Молодший програміст", "company": "Fozzy Group · Стажування", "period": "Sep 2019 – May 2020" }
-    ]
+    ],
+    "ratings": {
+      "title": "Оцінки й відгуки",
+      "yourRating": "Ваша оцінка",
+      "commentPlaceholder": "Залиште відгук (не обов'язково)",
+      "nameOptional": "Ваше ім'я (не обов'язково)",
+      "submit": "Надіслати",
+      "submitting": "Надсилаємо...",
+      "thanks": "Дякуємо! Ваш відгук з'явиться після перевірки.",
+      "errorStars": "Будь ласка, оберіть оцінку.",
+      "errorGeneric": "Щось пішло не так, спробуйте ще раз.",
+      "outOf5": "з 5",
+      "noRatingsYet": "Відгуків ще немає - станьте першими!"
+    }
   }
 }
