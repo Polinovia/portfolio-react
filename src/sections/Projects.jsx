@@ -182,11 +182,13 @@ const PROJECTS = [
   },
 ]
 
-export default function Projects() {
+export default function Projects({ initialProjectSlug }) {
   const carouselRef = useRef(null)
   const trackRef = useRef(null)
   const [viewportWidth, setViewportWidth] = useState(null)
-  const [selectedProject, setSelectedProject] = useState(null)
+  const [selectedProject, setSelectedProject] = useState(() =>
+    initialProjectSlug ? PROJECTS.find((p) => p.slug === initialProjectSlug) ?? null : null,
+  )
 
   // Clip the viewport to a width that fits a whole number of cards, so no
   // card is ever half-visible at the edge - it either fully shows or scrolls off.

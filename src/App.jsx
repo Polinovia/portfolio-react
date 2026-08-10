@@ -12,6 +12,20 @@ import Skills from './sections/Skills'
 import Experience from './sections/Experience'
 import Projects from './sections/Projects'
 
+const VALID_SECTIONS = ['news', 'who', 'skills', 'exp', 'projects']
+
+// URL shape: #<section> or #projects/<project-slug> (e.g. #projects/who-where-what
+// deep-links straight to that project's card). Falls back to 'news' for anything
+// unrecognized, so a stray/old hash never breaks navigation.
+function parseHash() {
+  const raw = window.location.hash.slice(1)
+  const [section, ...rest] = raw.split('/')
+  return {
+    section: VALID_SECTIONS.includes(section) ? section : 'news',
+    projectSlug: rest.join('/') || null,
+  }
+}
+
 
 
 function Starfield() {
@@ -65,7 +79,30 @@ function Starfield() {
 }
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState('news')
+  const [activeSection, setActiveSectionState] = useState(() => parseHash().section)
+  const [initialProjectSlug, setInitialProjectSlug] = useState(() => parseHash().projectSlug)
+
+  // Navigating via the sidebar is a fresh choice, so it clears any pending
+  // deep-linked project and updates the URL (via replaceState, not
+  // location.hash directly, so it doesn't trigger the browser's native
+  // scroll-to-element-with-matching-id behavior in this single-page shell).
+  const setActiveSection = (section) => {
+    setActiveSectionState(section)
+    setInitialProjectSlug(null)
+    window.history.replaceState(null, '', `#${section}`)
+  }
+
+  // Keeps the app in sync if the hash changes without a full reload (back/
+  // forward navigation, or a link elsewhere on the page pointing at #projects/...).
+  useEffect(() => {
+    const onHashChange = () => {
+      const parsed = parseHash()
+      setActiveSectionState(parsed.section)
+      setInitialProjectSlug(parsed.projectSlug)
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
 
   const renderSection = () => {
     switch (activeSection) {
@@ -73,7 +110,7 @@ export default function App() {
       case 'who': return <WhoAmI />
       case 'skills': return <Skills />
       case 'exp': return <Experience />
-      case 'projects': return <Projects />
+      case 'projects': return <Projects initialProjectSlug={initialProjectSlug} />
       default: return <WhatsNew />
     }
   }
