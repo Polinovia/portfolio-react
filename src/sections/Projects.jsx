@@ -37,14 +37,6 @@ const PROJECTS = [
     image: '/assets/projects/portfolio-figma.png',
   },
   {
-    name: '12.05',
-    tech: 'HTML · Landing Page',
-    description: 'A static landing page built with plain HTML/CSS to practice layout fundamentals.',
-    category: 'dev',
-    folder: 'HTML',
-    url: 'https://github.com/Polinovia/12.05',
-  },
-  {
     name: '15.05',
     tech: 'JavaScript · Interaction',
     description: 'A small JavaScript exercise focused on DOM manipulation and interactivity.',
