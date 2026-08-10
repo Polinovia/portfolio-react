@@ -605,6 +605,7 @@ nav {
 .thumb-php     { background: linear-gradient(135deg, #241a3a, #33234f); }
 .thumb-pwa     { background: linear-gradient(135deg, #142d33, #1b4048); }
 .thumb-figma   { background: linear-gradient(135deg, #2a1c3a, #3d2755); }
+.thumb-typescript { background: linear-gradient(135deg, #10233a, #16407a); }
 .thumb-other   { background: linear-gradient(135deg, #1c1c2a, #26263a); }
 
 .project-card-top {

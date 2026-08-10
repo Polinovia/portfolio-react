@@ -19,6 +19,16 @@ const ARROW_GAP = 8
 // - image:       real screenshot, if there is one (falls back to a tech-colored placeholder)
 const PROJECTS = [
   {
+    name: 'Who Where What',
+    tech: 'TypeScript · Browser Game · EN/FR',
+    description: 'A multilingual (EN/FR) browser game where friends build an absurd story together, designed from scratch in Figma before being coded and deployed.',
+    category: 'dev',
+    folder: 'TypeScript',
+    url: 'https://github.com/Polinovia/who-where-what',
+    previewUrl: 'https://who-where-what.netlify.app/',
+    figmaUrl: 'https://www.figma.com/design/sqG49YO6i4XueFX4IuenbF/who--where--what-?node-id=19-334&t=YS4YU5ueKN3VzMLW-1',
+  },
+  {
     name: 'NezZen',
     tech: 'Figma · UI Design',
     description: 'New UI design proposal for the NezZen product, built and iterated on in Figma.',
@@ -212,6 +222,7 @@ export default function Projects() {
                   folder={project.folder}
                   url={project.url}
                   previewUrl={project.previewUrl}
+                  figmaUrl={project.figmaUrl}
                   image={project.image}
                   delay={index * 0.05}
                 />
@@ -266,6 +277,7 @@ export default function Projects() {
               folder={selectedProject.folder}
               url={selectedProject.url}
               previewUrl={selectedProject.previewUrl}
+              figmaUrl={selectedProject.figmaUrl}
               image={selectedProject.image}
             />
           </div>

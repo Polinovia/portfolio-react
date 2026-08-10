@@ -10,13 +10,14 @@ const FOLDER_LABELS = {
   Vue: 'Vue',
   Nuxt: 'Nuxt',
   JavaScript: 'JS',
+  TypeScript: 'TS',
   HTML: 'HTML',
   PHP: 'PHP',
   PWA: 'PWA',
   Figma: 'Figma',
 }
 
-export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl, image, folder }) {
+export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl, figmaUrl, image, folder }) {
   return (
     <div
       className="project-card"
@@ -58,6 +59,11 @@ export default function ProjectCard({ name, tech, description, category, delay =
         {previewUrl && (
           <a href={previewUrl} target="_blank" rel="noreferrer" className="project-link project-link--preview">
             Demo
+          </a>
+        )}
+        {figmaUrl && (
+          <a href={figmaUrl} target="_blank" rel="noreferrer" className="project-link project-link--figma">
+            Design
           </a>
         )}
       </div>
