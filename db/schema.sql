@@ -13,3 +13,15 @@ create table if not exists project_ratings (
 
 create index if not exists idx_project_ratings_slug_approved
   on project_ratings (project_slug, approved);
+
+create table if not exists recommendations (
+  id            bigint generated always as identity primary key,
+  author_name   text not null,
+  relationship  text,
+  comment       text not null,
+  approved      boolean not null default false,
+  created_at    timestamptz not null default now()
+);
+
+create index if not exists idx_recommendations_approved
+  on recommendations (approved, created_at desc);

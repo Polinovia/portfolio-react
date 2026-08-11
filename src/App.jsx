@@ -11,8 +11,9 @@ import WhoAmI from './sections/WhoAmI'
 import Skills from './sections/Skills'
 import Experience from './sections/Experience'
 import Projects from './sections/Projects'
+import Recommendations from './sections/Recommendations'
 
-const VALID_SECTIONS = ['news', 'who', 'skills', 'exp', 'projects']
+const VALID_SECTIONS = ['news', 'who', 'recommendations', 'skills', 'exp', 'projects']
 
 // URL shape: #<section> or #projects/<project-slug> (e.g. #projects/who-where-what
 // deep-links straight to that project's card). Falls back to 'news' for anything
@@ -108,6 +109,7 @@ export default function App() {
     switch (activeSection) {
       case 'news': return <WhatsNew />
       case 'who': return <WhoAmI />
+      case 'recommendations': return <Recommendations />
       case 'skills': return <Skills />
       case 'exp': return <Experience />
       case 'projects': return <Projects initialProjectSlug={initialProjectSlug} />

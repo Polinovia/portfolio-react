@@ -31,6 +31,7 @@ export default function AdminApp() {
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState(false)
   const [pending, setPending] = useState(null)
+  const [pendingRecommendations, setPendingRecommendations] = useState(null)
 
   const { invite, recovery } = useMemo(getHashToken, [])
   const pendingToken = invite || recovery
@@ -86,33 +87,33 @@ export default function AdminApp() {
     setView('login')
   }
 
-  const fetchPending = useCallback(() => {
+  const fetchPending = useCallback(async () => {
     if (!user) return
     setError(null)
-    user
-      .jwt()
-      .then((token) =>
-        fetch('/.netlify/functions/ratings-admin', {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-      )
-      .then((res) => {
-        if (!res.ok) throw new Error('failed to load')
-        return res.json()
-      })
-      .then((json) => setPending(json.pending))
-      .catch(() => setError('Could not load pending ratings.'))
+    try {
+      const token = await user.jwt()
+      const [ratingsRes, recommendationsRes] = await Promise.all([
+        fetch('/.netlify/functions/ratings-admin', { headers: { Authorization: `Bearer ${token}` } }),
+        fetch('/.netlify/functions/recommendations-admin', { headers: { Authorization: `Bearer ${token}` } }),
+      ])
+      if (!ratingsRes.ok || !recommendationsRes.ok) throw new Error('failed to load')
+      const [ratingsJson, recommendationsJson] = await Promise.all([ratingsRes.json(), recommendationsRes.json()])
+      setPending(ratingsJson.pending)
+      setPendingRecommendations(recommendationsJson.pending)
+    } catch {
+      setError('Could not load pending items.')
+    }
   }, [user])
 
   useEffect(() => {
     if (view === 'app') fetchPending()
   }, [view, fetchPending])
 
-  const moderate = async (id, action) => {
+  const moderate = async (endpoint, id, action) => {
     if (!user) return
     try {
       const token = await user.jwt()
-      const res = await fetch('/.netlify/functions/ratings-admin', {
+      const res = await fetch(`/.netlify/functions/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +124,7 @@ export default function AdminApp() {
       if (!res.ok) throw new Error('failed')
       fetchPending()
     } catch {
-      setError('Could not update that rating, please try again.')
+      setError('Could not update that item, please try again.')
     }
   }
 
@@ -172,12 +173,13 @@ export default function AdminApp() {
 
   return (
     <div className="admin-page">
-      <div className="admin-title">Pending ratings & comments</div>
       <button className="admin-btn" onClick={handleLogout}>
         Log out
       </button>
 
       {error && <p className="admin-empty">{error}</p>}
+
+      <div className="admin-title">Pending ratings & comments</div>
 
       {pending && pending.length === 0 && (
         <p className="admin-empty">Nothing waiting for review.</p>
@@ -193,10 +195,38 @@ export default function AdminApp() {
               </div>
               {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
               <div className="admin-pending-actions">
-                <button className="admin-btn admin-btn-approve" onClick={() => moderate(item.id, 'approve')}>
+                <button className="admin-btn admin-btn-approve" onClick={() => moderate('ratings-admin', item.id, 'approve')}>
                   Approve
                 </button>
-                <button className="admin-btn admin-btn-reject" onClick={() => moderate(item.id, 'reject')}>
+                <button className="admin-btn admin-btn-reject" onClick={() => moderate('ratings-admin', item.id, 'reject')}>
+                  Reject
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="admin-title">Pending recommendations</div>
+
+      {pendingRecommendations && pendingRecommendations.length === 0 && (
+        <p className="admin-empty">Nothing waiting for review.</p>
+      )}
+
+      {pendingRecommendations && pendingRecommendations.length > 0 && (
+        <ul className="admin-pending-list">
+          {pendingRecommendations.map((item) => (
+            <li key={item.id} className="admin-pending-item">
+              <div className="admin-pending-slug">
+                {item.author_name}
+                {item.relationship ? ` · ${item.relationship}` : ''}
+              </div>
+              {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
+              <div className="admin-pending-actions">
+                <button className="admin-btn admin-btn-approve" onClick={() => moderate('recommendations-admin', item.id, 'approve')}>
+                  Approve
+                </button>
+                <button className="admin-btn admin-btn-reject" onClick={() => moderate('recommendations-admin', item.id, 'reject')}>
                   Reject
                 </button>
               </div>

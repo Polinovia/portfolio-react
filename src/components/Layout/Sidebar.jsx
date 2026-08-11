@@ -17,6 +17,7 @@ import avatarPhoto from '../../assets/avatar.webp'
 const NAV_ITEMS = [
   { id: 'news', label: 'Whats New' },
   { id: 'who', label: 'Who Am I?' },
+  { id: 'recommendations', label: 'Recommendations' },
   { id: 'skills', label: 'My Skills' },
   { id: 'exp', label: 'Experience' },
   { id: 'projects', label: 'My Projects' },

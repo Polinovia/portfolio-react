@@ -1019,6 +1019,48 @@ nav {
   font-size: 13px;
 }
 
+/* ── Recommendations section (top-level nav page) ── */
+.recommendations {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.recommendation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.recommendation-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+.recommendation-item-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.recommendation-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.recommendation-item-relationship {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.recommendation-item-comment {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
 /* ── Footer ───────────────────────────────────
      Always visible at the bottom of the page     */
 footer {
