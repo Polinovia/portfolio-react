@@ -95,7 +95,8 @@ body {
      - second row (sidebar + main) = fills remaining space */
 .shell {
   position: relative;
-  z-index: 1; /* above the glow blobs */
+  z-index: 2; /* above the glow blobs, and above the footer so fixed-position
+                 overlays nested inside (e.g. the project modal) paint over it */
   max-width: 1020px;
   width: 100%;
   margin: 0 auto; /* center the layout */
