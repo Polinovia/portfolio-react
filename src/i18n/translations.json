@@ -71,6 +71,10 @@
       "errorComment": "Please write a comment.",
       "errorGeneric": "Something went wrong, please try again.",
       "noneYet": "No recommendations yet - be the first!"
+    },
+    "projects": {
+      "errorGeneric": "Couldn't load projects, please try again.",
+      "retry": "Retry"
     }
   },
   "FR": {
@@ -145,6 +149,10 @@
       "errorComment": "Merci d'écrire un commentaire.",
       "errorGeneric": "Une erreur est survenue, veuillez réessayer.",
       "noneYet": "Pas encore de recommandations - soyez le premier !"
+    },
+    "projects": {
+      "errorGeneric": "Impossible de charger les projets, veuillez réessayer.",
+      "retry": "Réessayer"
     }
   },
   "UA": {
@@ -219,6 +227,10 @@
       "errorComment": "Будь ласка, напишіть відгук.",
       "errorGeneric": "Щось пішло не так, спробуйте ще раз.",
       "noneYet": "Рекомендацій ще немає - станьте першими!"
+    },
+    "projects": {
+      "errorGeneric": "Не вдалося завантажити проєкти, спробуйте ще раз.",
+      "retry": "Спробувати ще раз"
     }
   }
 }

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ProjectCard from '../components/UI/Projectcard'
 import ProjectRatings from '../components/UI/ProjectRatings'
+import { useTranslation } from '../i18n/TranslationProvider'
 
 // Must match .project-carousel-item / .carousel-arrow sizing in global.css
 const CARD_WIDTH = 260
@@ -8,187 +9,34 @@ const CARD_GAP = 18
 const ARROW_WIDTH = 34
 const ARROW_GAP = 8
 
-// ── Projects data ──────────────────────────────
-// Each object = one project card.
-// - name:        project title
-// - tech:        tech stack shown below the name
-// - description: one-line summary of what the project does
-// - category:    'dev' | 'design' - used for the badge color
-// - folder:      tech stack - used for the placeholder thumbnail color when there's no image
-// - url:         GitHub (or Figma) link
-// - previewUrl:  live demo link, if there is one
-// - image:       real screenshot, if there is one (falls back to a tech-colored placeholder)
-const PROJECTS = [
-  {
-    name: 'Who Where What',
-    slug: 'who-where-what',
-    tech: 'TypeScript · Browser Game · EN/FR',
-    description: 'A multilingual (EN/FR) browser game where friends build an absurd story together, designed from scratch in Figma before being coded and deployed.',
-    category: 'dev',
-    folder: 'TypeScript',
-    url: 'https://github.com/Polinovia/who-where-what',
-    previewUrl: 'https://who-where-what.netlify.app/',
-    figmaUrl: 'https://www.figma.com/design/sqG49YO6i4XueFX4IuenbF/who--where--what-?node-id=19-334&t=YS4YU5ueKN3VzMLW-1',
-    image: '/assets/projects/whowherewhat.webp',
-  },
-  {
-    name: 'NezZen',
-    slug: 'nezzen',
-    tech: 'Figma · UI Design',
-    description: 'New UI design proposal for the NezZen product, built and iterated on in Figma.',
-    category: 'design',
-    folder: 'Figma',
-    url: 'https://www.figma.com/design/9FhPm5Ric9S2FQj2Syr1J6/NezZen?node-id=0-1&t=6BQBuoPJaaO8kriO-1',
-    image: '/assets/projects/nezzen.png',
-  },
-  {
-    name: 'Portfolio',
-    slug: 'portfolio-figma',
-    tech: 'Figma · UI Design',
-    description: 'Figma design mockups for this very portfolio, before it became a React app.',
-    category: 'design',
-    folder: 'Figma',
-    url: 'https://www.figma.com/design/a3iytrjfRqUQUAZfDZg4Mq/Portfolio?node-id=0-1&t=UVWcuWniWx7Z3pIY-1',
-    image: '/assets/projects/portfolio-figma.png',
-  },
-  {
-    name: '15.05',
-    slug: '15-05',
-    tech: 'JavaScript · Interaction',
-    description: 'A small JavaScript exercise focused on DOM manipulation and interactivity.',
-    category: 'dev',
-    folder: 'JavaScript',
-    url: 'https://github.com/Polinovia/15.05',
-  },
-  {
-    name: 'airport',
-    slug: 'airport',
-    tech: 'React · API · UI',
-    description: 'A React app that browses flights via a public API with a clean, responsive UI.',
-    category: 'dev',
-    folder: 'React',
-    url: 'https://github.com/Polinovia/airport',
-    image: '/assets/projects/airport.png',
-  },
-  {
-    name: 'articles-vue',
-    slug: 'articles-vue',
-    tech: 'Vue · Content · Articles',
-    description: 'A Vue app for browsing and reading articles, with a focus on content layout.',
-    category: 'dev',
-    folder: 'Vue',
-    url: 'https://github.com/Polinovia/articles-vue',
-    previewUrl: 'https://pwa-vue-polina.netlify.app/',
-  },
-  {
-    name: 'exercice-front',
-    slug: 'exercice-front',
-    tech: 'JavaScript · Game · UI',
-    description: 'A small JavaScript game exercise built to practice logic and UI state.',
-    category: 'dev',
-    folder: 'JavaScript',
-    url: 'https://github.com/Polinovia/exercice-front',
-    previewUrl: 'https://jeuphrasesbevz.netlify.app/',
-    image: '/assets/projects/exercice-front.png',
-  },
-  {
-    name: 'front_quiestla',
-    slug: 'front-quiestla',
-    tech: 'Vue · Responsive · UI',
-    description: 'A responsive Vue front-end built around a "who is it" style UI.',
-    category: 'dev',
-    folder: 'Vue',
-    url: 'https://github.com/Polinovia/front_quiestla',
-    previewUrl: 'https://quiestla-polina.netlify.app/',
-    image: '/assets/projects/front_quiestla.png',
-  },
-  {
-    name: 'jamstack-nuxt',
-    slug: 'jamstack-nuxt',
-    tech: 'Nuxt · Jamstack · Static',
-    description: 'A statically generated Jamstack site built with Nuxt.',
-    category: 'dev',
-    folder: 'Nuxt',
-    url: 'https://github.com/Polinovia/jamstack-nuxt',
-    previewUrl: 'https://nuxtdyn.netlify.app/',
-    image: '/assets/projects/jamstack-nuxt.png',
-  },
-  {
-    name: 'my-nuxt-auth',
-    slug: 'my-nuxt-auth',
-    tech: 'Nuxt · Auth · SSR',
-    description: 'A Nuxt app exploring server-side rendering with authenticated routes.',
-    category: 'dev',
-    folder: 'Nuxt',
-    url: 'https://github.com/Polinovia/my-nuxt-auth',
-    previewUrl: 'https://courir-ex.netlify.app/',
-    image: '/assets/projects/my-nuxt-auth.png',
-  },
-  {
-    name: 'plan-culture-front',
-    slug: 'plan-culture-front',
-    tech: 'Vue · Planning · UI',
-    description: 'A Vue front-end for planning crops and tracking plant harvests.',
-    category: 'dev',
-    folder: 'Vue',
-    url: 'https://github.com/Polinovia/plan-culture-front',
-  },
-  {
-    name: 'Urbex-Project-FRONT',
-    slug: 'urbex-project-front',
-    tech: 'Vue · Exploration Game · Group Project',
-    description: 'A Vue exploration game where players discover and navigate abandoned urban sites - built as a team project at the end of our formation.',
-    category: 'dev',
-    folder: 'Vue',
-    url: 'https://github.com/mplscrummaster/Urbex-Project-FRONT',
-    image: '/assets/projects/urbex-project-front.png',
-  },
-  {
-    name: 'notif_avec_vue',
-    slug: 'notif-avec-vue',
-    tech: 'Vue · Notifications · UI',
-    description: 'A Vue app demonstrating a real-time notification system and UI.',
-    category: 'dev',
-    folder: 'Vue',
-    url: 'https://github.com/Polinovia/notif_avec_vue',
-  },
-  {
-    name: 'php-demo',
-    slug: 'php-demo',
-    tech: 'PHP · Demo · Backend',
-    description: 'A small PHP backend demo covering basic server-side logic.',
-    category: 'dev',
-    folder: 'PHP',
-    url: 'https://github.com/Polinovia/php-demo',
-  },
-  {
-    name: 'React',
-    slug: 'react-practice',
-    tech: 'React · Web App',
-    description: 'A React practice repo used to explore components, hooks and routing.',
-    category: 'dev',
-    folder: 'React',
-    url: 'https://github.com/Polinovia/React',
-  },
-  {
-    name: 'wf12-pwa-bpi',
-    slug: 'wf12-pwa-bpi',
-    tech: 'PWA · Service Workers · Offline',
-    description: 'A Progressive Web App with offline support via service workers.',
-    category: 'dev',
-    folder: 'PWA',
-    url: 'https://github.com/Polinovia/wf12-pwa-bpi',
-    previewUrl: 'https://wf12-pwa-bpi.netlify.app/',
-  },
-]
-
 export default function Projects({ initialProjectSlug }) {
+  const { t } = useTranslation()
   const carouselRef = useRef(null)
   const trackRef = useRef(null)
   const [viewportWidth, setViewportWidth] = useState(null)
-  const [selectedProject, setSelectedProject] = useState(() =>
-    initialProjectSlug ? PROJECTS.find((p) => p.slug === initialProjectSlug) ?? null : null,
-  )
+  const [projects, setProjects] = useState(null)
+  const [error, setError] = useState(false)
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  const fetchProjects = useCallback(() => {
+    setError(false)
+    fetch('/.netlify/functions/projects-list')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('projects-list request failed'))))
+      .then((json) => setProjects(json.projects))
+      .catch(() => setError(true))
+  }, [])
+
+  useEffect(() => {
+    fetchProjects()
+  }, [fetchProjects])
+
+  // Resolves the #projects/<slug> deep link once the project list has
+  // loaded (it can't resolve synchronously anymore now that data is fetched).
+  useEffect(() => {
+    if (!projects || !initialProjectSlug || selectedProject) return
+    const match = projects.find((p) => p.slug === initialProjectSlug)
+    if (match) setSelectedProject(match)
+  }, [projects, initialProjectSlug, selectedProject])
 
   // Clip the viewport to a width that fits a whole number of cards, so no
   // card is ever half-visible at the edge - it either fully shows or scrolls off.
@@ -214,6 +62,17 @@ export default function Projects({ initialProjectSlug }) {
     track.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: 'smooth' })
   }
 
+  if (error) {
+    return (
+      <div className="projects-error">
+        <p className="projects-error-text">{t('projects.errorGeneric')}</p>
+        <button type="button" className="projects-error-retry" onClick={fetchProjects}>
+          {t('projects.retry')}
+        </button>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="project-carousel" ref={carouselRef}>
@@ -231,10 +90,10 @@ export default function Projects({ initialProjectSlug }) {
           style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
         >
           <div className="project-carousel-track" ref={trackRef}>
-            {PROJECTS.map((project, index) => (
+            {projects && projects.map((project, index) => (
               <div
                 className="project-carousel-item"
-                key={project.name}
+                key={project.slug}
                 onClick={() => setSelectedProject(project)}
               >
                 <ProjectCard
@@ -266,9 +125,9 @@ export default function Projects({ initialProjectSlug }) {
 
       {/* Mobile-only: tappable list, opens a popup with the full card */}
       <ul className="project-mobile-list">
-        {PROJECTS.map((project) => (
+        {projects && projects.map((project) => (
           <li
-            key={project.name}
+            key={project.slug}
             className="project-mobile-item"
             onClick={() => setSelectedProject(project)}
           >

@@ -25,3 +25,17 @@ create table if not exists recommendations (
 
 create index if not exists idx_recommendations_approved
   on recommendations (approved, created_at desc);
+
+create table if not exists projects (
+  slug         text primary key,
+  name         text not null,
+  tech         text not null,
+  description  text not null,
+  category     text not null check (category in ('dev', 'design')),
+  folder       text not null,
+  url          text not null,
+  preview_url  text,
+  figma_url    text,
+  image        text,
+  sort_order   integer not null
+);

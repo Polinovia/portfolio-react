@@ -1,9 +1,10 @@
 const { sql } = require('./_db')
+const { getAuthenticatedUser } = require('./_auth')
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' }
 
 exports.handler = async (event, context) => {
-  const user = context.clientContext && context.clientContext.user
+  const user = getAuthenticatedUser(event, context)
   if (!user) {
     return { statusCode: 401, headers: JSON_HEADERS, body: JSON.stringify({ error: 'Not authenticated' }) }
   }

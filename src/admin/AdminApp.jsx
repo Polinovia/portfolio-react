@@ -10,6 +10,20 @@ const auth = new GoTrue({
   setCookie: false,
 })
 
+// Dev-only escape hatch, mirrored in netlify/functions/_auth.js (keep the
+// email/password/token in sync with that file). process.env.NODE_ENV is
+// baked in at build time by react-scripts, so this branch is compiled out
+// of `pnpm run build` entirely - it only exists in the dev bundle. The
+// functions still re-check independently before honoring the token.
+const DEV_BYPASS_ENABLED = process.env.NODE_ENV !== 'production'
+const DEV_ADMIN_EMAIL = 'dev@mail.com'
+const DEV_ADMIN_PASSWORD = 'password123'
+const DEV_TOKEN = 'dev-local-admin'
+
+function makeDevUser(email) {
+  return { email, jwt: () => Promise.resolve(DEV_TOKEN), logout: () => Promise.resolve() }
+}
+
 function getHashToken() {
   const params = new URLSearchParams(window.location.hash.replace(/^#/, ''))
   return { invite: params.get('invite_token'), recovery: params.get('recovery_token') }
@@ -71,6 +85,11 @@ export default function AdminApp() {
     const password = e.target.password.value
     setBusy(true)
     try {
+      if (DEV_BYPASS_ENABLED && email === DEV_ADMIN_EMAIL && password === DEV_ADMIN_PASSWORD) {
+        setUser(makeDevUser(email))
+        setView('app')
+        return
+      }
       const loggedInUser = await auth.login(email, password, true)
       setUser(loggedInUser)
       setView('app')
