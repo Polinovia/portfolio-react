@@ -30,7 +30,7 @@ async function notifyPendingRating({ projectSlug, stars, pendingCount }) {
   const plural = pendingCount === 1 ? 'rating is' : 'ratings are'
   await sendEmail({
     subject: `New rating for "${projectSlug}" - ${pendingCount} pending review`,
-    text: `A new ${stars}/5 rating was submitted for "${projectSlug}".\n\n${pendingCount} ${plural} waiting for review at /admin.`,
+    text: `A new ${stars}/5 rating was submitted for "${projectSlug}".\n\n${pendingCount} ${plural} waiting for review on the admin page.`,
   })
 }
 
@@ -38,7 +38,7 @@ async function notifyPendingRecommendation({ authorName, pendingCount }) {
   const plural = pendingCount === 1 ? 'recommendation is' : 'recommendations are'
   await sendEmail({
     subject: `New recommendation from ${authorName} - ${pendingCount} pending review`,
-    text: `${authorName} left a new recommendation.\n\n${pendingCount} ${plural} waiting for review at /admin.`,
+    text: `${authorName} left a new recommendation.\n\n${pendingCount} ${plural} waiting for review on the admin page.`,
   })
 }
 
