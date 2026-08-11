@@ -1,4 +1,5 @@
 const { sql } = require('./_db')
+const { notifyPendingRating } = require('./_notify')
 
 const SLUG_RE = /^[a-z0-9-]+$/
 const MAX_COMMENT = 500
@@ -41,6 +42,14 @@ exports.handler = async (event) => {
       insert into project_ratings (project_slug, stars, comment, author_name, approved)
       values (${projectSlug}, ${starsNum}, ${trimmedComment || null}, ${trimmedName || null}, false)
     `
+
+    const [{ count }] = await sql`select count(*)::int as count from project_ratings where approved = false`
+    try {
+      await notifyPendingRating({ projectSlug, stars: starsNum, pendingCount: count })
+    } catch {
+      // a broken email notification should never fail the actual submission
+    }
+
     return { statusCode: 201, headers: JSON_HEADERS, body: JSON.stringify({ message: 'submitted, pending review' }) }
   } catch (err) {
     return { statusCode: 500, headers: JSON_HEADERS, body: JSON.stringify({ error: 'Could not save rating' }) }
