@@ -141,7 +141,6 @@ const PROJECTS = [
     category: 'dev',
     folder: 'Vue',
     url: 'https://github.com/mplscrummaster/Urbex-Project-FRONT',
-    previewUrl: 'https://michonmaximilien.dev/urbex-front/',
     image: '/assets/projects/urbex-project-front.png',
   },
   {
