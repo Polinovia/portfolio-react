@@ -29,6 +29,7 @@ const PROJECTS = [
     url: 'https://github.com/Polinovia/who-where-what',
     previewUrl: 'https://who-where-what.netlify.app/',
     figmaUrl: 'https://www.figma.com/design/sqG49YO6i4XueFX4IuenbF/who--where--what-?node-id=19-334&t=YS4YU5ueKN3VzMLW-1',
+    image: '/assets/projects/whowherewhat.webp',
   },
   {
     name: 'NezZen',
