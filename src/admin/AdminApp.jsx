@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react'
 import GoTrue from 'gotrue-js'
 
 // Custom minimal admin auth - deliberately NOT using netlify-identity-widget's
@@ -66,6 +66,7 @@ export default function AdminApp() {
   const [projectFormError, setProjectFormError] = useState(null)
   const [savingProject, setSavingProject] = useState(false)
   const [adminTab, setAdminTab] = useState('projects') // projects | reviews
+  const photoInputRef = useRef(null)
 
   const { invite, recovery } = useMemo(getHashToken, [])
   const pendingToken = invite || recovery
@@ -196,6 +197,41 @@ export default function AdminApp() {
   const handleProjectFormChange = (e) => {
     const { name, value } = e.target
     setProjectForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files && e.target.files[0]
+    e.target.value = ''
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      setProjectFormError('Please choose an image file.')
+      return
+    }
+    if (file.size > 12 * 1024 * 1024) {
+      setProjectFormError('That photo is too large (max 12MB).')
+      return
+    }
+    setProjectFormError(null)
+    const reader = new FileReader()
+    reader.onload = () => {
+      const img = new Image()
+      img.onload = () => {
+        const maxWidth = 960
+        const scale = Math.min(1, maxWidth / img.width)
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.round(img.width * scale)
+        canvas.height = Math.round(img.height * scale)
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82)
+        setProjectForm((prev) => ({ ...prev, image: dataUrl }))
+      }
+      img.src = reader.result
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemovePhoto = () => {
+    setProjectForm((prev) => ({ ...prev, image: '' }))
   }
 
   const handleProjectFormSubmit = async (e) => {
@@ -356,28 +392,30 @@ export default function AdminApp() {
             <ul className="admin-projects-list">
               {projects.map((project, index) => (
                 <li key={project.slug} className="admin-project-row">
-                  <div className="admin-project-order-btns">
-                    <button
-                      className="admin-btn admin-order-btn"
-                      onClick={() => handleMoveProject(project.slug, 'up')}
-                      disabled={index === 0}
-                      aria-label="Move up"
-                    >
-                      ↑
-                    </button>
-                    <button
-                      className="admin-btn admin-order-btn"
-                      onClick={() => handleMoveProject(project.slug, 'down')}
-                      disabled={index === projects.length - 1}
-                      aria-label="Move down"
-                    >
-                      ↓
-                    </button>
-                  </div>
-                  <div className="admin-project-info">
-                    <div className="admin-project-name">{project.name}</div>
-                    <div className="admin-project-meta">
-                      {project.slug} · {project.category}
+                  <div className="admin-project-main">
+                    <div className="admin-project-order-btns">
+                      <button
+                        className="admin-btn admin-order-btn"
+                        onClick={() => handleMoveProject(project.slug, 'up')}
+                        disabled={index === 0}
+                        aria-label="Move up"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className="admin-btn admin-order-btn"
+                        onClick={() => handleMoveProject(project.slug, 'down')}
+                        disabled={index === projects.length - 1}
+                        aria-label="Move down"
+                      >
+                        ↓
+                      </button>
+                    </div>
+                    <div className="admin-project-info">
+                      <div className="admin-project-name">{project.name}</div>
+                      <div className="admin-project-meta">
+                        {project.slug} · {project.category}
+                      </div>
                     </div>
                   </div>
                   <div className="admin-project-actions">
@@ -465,82 +503,129 @@ export default function AdminApp() {
               <div className="admin-modal-title">{projectFormMode === 'edit' ? 'Edit project' : 'New project'}</div>
               <form className="admin-project-form" onSubmit={handleProjectFormSubmit}>
                 <div className="admin-project-form-grid">
-                  <input
-                    name="slug"
-                    placeholder="slug (e.g. my-project)"
-                    value={projectForm.slug}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                    required
-                    disabled={projectFormMode === 'edit'}
-                  />
-                  <input
-                    name="name"
-                    placeholder="Name"
-                    value={projectForm.name}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                    required
-                  />
-                  <input
-                    name="tech"
-                    placeholder="Tech (e.g. React · API · UI)"
-                    value={projectForm.tech}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                    required
-                  />
-                  <select name="category" value={projectForm.category} onChange={handleProjectFormChange} className="admin-select">
-                    <option value="dev">dev</option>
-                    <option value="design">design</option>
-                  </select>
-                  <input
-                    name="folder"
-                    placeholder="Folder (e.g. React)"
-                    value={projectForm.folder}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                    required
-                  />
-                  <input
-                    name="url"
-                    placeholder="URL (repo/live link)"
-                    value={projectForm.url}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                    required
-                  />
-                  <input
-                    name="previewUrl"
-                    placeholder="Preview URL (optional)"
-                    value={projectForm.previewUrl}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                  />
-                  <input
-                    name="figmaUrl"
-                    placeholder="Figma URL (optional)"
-                    value={projectForm.figmaUrl}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                  />
-                  <input
-                    name="image"
-                    placeholder="Image path (optional)"
-                    value={projectForm.image}
-                    onChange={handleProjectFormChange}
-                    className="rating-form-name"
-                  />
+                  <label className="admin-field">
+                    <span className="admin-field-label">Slug</span>
+                    <input
+                      name="slug"
+                      placeholder="my-project"
+                      value={projectForm.slug}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                      required
+                      disabled={projectFormMode === 'edit'}
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Name</span>
+                    <input
+                      name="name"
+                      placeholder="My Project"
+                      value={projectForm.name}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                      required
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Tech</span>
+                    <input
+                      name="tech"
+                      placeholder="React · API · UI"
+                      value={projectForm.tech}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                      required
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Category</span>
+                    <select name="category" value={projectForm.category} onChange={handleProjectFormChange} className="admin-select">
+                      <option value="dev">dev</option>
+                      <option value="design">design</option>
+                    </select>
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Folder</span>
+                    <input
+                      name="folder"
+                      placeholder="React"
+                      value={projectForm.folder}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                      required
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">URL (repo or live link)</span>
+                    <input
+                      name="url"
+                      placeholder="https://..."
+                      value={projectForm.url}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                      required
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Preview URL (optional)</span>
+                    <input
+                      name="previewUrl"
+                      placeholder="https://..."
+                      value={projectForm.previewUrl}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                    />
+                  </label>
+                  <label className="admin-field">
+                    <span className="admin-field-label">Figma URL (optional)</span>
+                    <input
+                      name="figmaUrl"
+                      placeholder="https://..."
+                      value={projectForm.figmaUrl}
+                      onChange={handleProjectFormChange}
+                      className="rating-form-name"
+                    />
+                  </label>
                 </div>
-                <textarea
-                  name="description"
-                  placeholder="Description"
-                  value={projectForm.description}
-                  onChange={handleProjectFormChange}
-                  className="rating-form-textarea"
-                  rows={3}
-                  required
-                />
+                <label className="admin-field">
+                  <span className="admin-field-label">Photo (optional)</span>
+                  <div className="admin-photo-picker">
+                    {projectForm.image ? (
+                      <img src={projectForm.image} alt="" className="admin-photo-preview" />
+                    ) : (
+                      <div className="admin-photo-preview admin-photo-preview--empty">No photo</div>
+                    )}
+                    <div className="admin-photo-actions">
+                      <button type="button" className="admin-btn" onClick={() => photoInputRef.current.click()}>
+                        Choose from my computer…
+                      </button>
+                      {projectForm.image && (
+                        <button type="button" className="admin-btn admin-btn-reject" onClick={handleRemovePhoto}>
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <input
+                      ref={photoInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoChange}
+                      className="admin-photo-file-input"
+                    />
+                  </div>
+                </label>
+                <label className="admin-field">
+                  <span className="admin-field-label">Description</span>
+                  <textarea
+                    name="description"
+                    placeholder="Short description shown on the project card"
+                    value={projectForm.description}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-textarea"
+                    rows={3}
+                    required
+                  />
+                </label>
                 {projectFormError && <p className="rating-form-error">{projectFormError}</p>}
                 <div className="admin-project-form-actions">
                   <button type="submit" className="admin-btn admin-btn-approve" disabled={savingProject}>

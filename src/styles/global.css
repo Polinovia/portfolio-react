@@ -989,8 +989,8 @@ nav {
 }
 .admin-login-btn,
 .admin-btn {
-  font-size: 12px;
-  padding: 6px 16px;
+  font-size: 13px;
+  padding: 7px 16px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--bg2);
@@ -1019,12 +1019,12 @@ nav {
   gap: 8px;
 }
 .admin-pending-slug {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 0.06em;
 }
 .admin-pending-comment {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   margin: 0;
 }
@@ -1042,7 +1042,7 @@ nav {
 }
 .admin-empty {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .admin-tabs {
   display: flex;
@@ -1056,7 +1056,7 @@ nav {
   border: none;
   cursor: pointer;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -1086,20 +1086,26 @@ nav {
   padding: 12px 16px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.admin-project-main {
+  display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 .admin-project-info {
   min-width: 0;
 }
 .admin-project-name {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.06em;
   color: var(--text-project);
 }
 .admin-project-meta {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -1110,7 +1116,6 @@ nav {
 }
 .admin-project-order-btns {
   display: flex;
-  flex-direction: column;
   gap: 4px;
   flex-shrink: 0;
 }
@@ -1133,6 +1138,59 @@ nav {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.admin-field-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+.admin-photo-picker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.admin-photo-preview {
+  width: 96px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  flex-shrink: 0;
+}
+.admin-photo-preview--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.admin-photo-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.admin-photo-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.admin-page .rating-form-name,
+.admin-page .rating-form-textarea {
+  font-size: 14px;
+  padding: 9px 10px;
+}
+.admin-page .rating-form-error {
+  font-size: 13px;
+}
 .admin-project-form-actions {
   display: flex;
   gap: 8px;
@@ -1144,8 +1202,8 @@ nav {
   border-radius: 8px;
   color: var(--text);
   font-family: inherit;
-  font-size: 12px;
-  padding: 8px 10px;
+  font-size: 14px;
+  padding: 9px 10px;
   box-sizing: border-box;
 }
 .admin-modal-overlay {
@@ -1192,7 +1250,7 @@ nav {
 }
 .admin-modal-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.06em;
   margin-bottom: 14px;
 }

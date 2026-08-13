@@ -4,6 +4,7 @@ const { getAuthenticatedUser } = require('./_auth')
 const JSON_HEADERS = { 'Content-Type': 'application/json' }
 const SLUG_RE = /^[a-z0-9-]+$/
 const CATEGORIES = ['dev', 'design']
+const MAX_IMAGE_LENGTH = 3_000_000 // uploaded photos are resized/compressed client-side before this
 
 function clean(value, maxLen) {
   return typeof value === 'string' ? value.trim().slice(0, maxLen) : ''
@@ -19,7 +20,7 @@ function validateProject(payload) {
   const url = clean(payload.url, 500)
   const previewUrl = clean(payload.previewUrl, 500) || null
   const figmaUrl = clean(payload.figmaUrl, 500) || null
-  const image = clean(payload.image, 500) || null
+  const rawImage = typeof payload.image === 'string' ? payload.image.trim() : ''
 
   if (!SLUG_RE.test(slug)) return { error: 'slug must contain only lowercase letters, numbers and hyphens' }
   if (!name) return { error: 'name is required' }
@@ -28,8 +29,9 @@ function validateProject(payload) {
   if (!CATEGORIES.includes(category)) return { error: 'category must be dev or design' }
   if (!folder) return { error: 'folder is required' }
   if (!url) return { error: 'url is required' }
+  if (rawImage.length > MAX_IMAGE_LENGTH) return { error: 'Photo is too large, please choose a smaller image' }
 
-  return { value: { slug, name, tech, description, category, folder, url, previewUrl, figmaUrl, image } }
+  return { value: { slug, name, tech, description, category, folder, url, previewUrl, figmaUrl, image: rawImage || null } }
 }
 
 exports.handler = async (event, context) => {
