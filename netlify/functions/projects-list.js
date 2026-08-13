@@ -11,7 +11,7 @@ exports.handler = async (event) => {
     const rows = await sql`
       select slug, name, tech, description, category, folder, url, preview_url, figma_url, image
       from projects
-      order by sort_order asc
+      order by sort_order asc, slug asc
     `
 
     return {

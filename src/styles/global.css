@@ -1044,6 +1044,164 @@ nav {
   color: var(--text-muted);
   font-size: 13px;
 }
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  max-width: 640px;
+}
+.admin-tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 10px 16px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.admin-tab-btn:hover {
+  color: var(--text-accent);
+}
+.admin-tab-btn.active {
+  color: var(--text-accent);
+  border-bottom-color: var(--purple-light);
+}
+.admin-projects-list {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.admin-project-row {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.admin-project-info {
+  min-width: 0;
+}
+.admin-project-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--text-project);
+}
+.admin-project-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.admin-project-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.admin-project-order-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.admin-order-btn {
+  padding: 2px 8px;
+  line-height: 1.4;
+}
+.admin-order-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.admin-project-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.admin-project-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.admin-project-form-actions {
+  display: flex;
+  gap: 8px;
+}
+.admin-select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 16, 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+  animation: modalFadeIn 0.2s ease both;
+}
+.admin-modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px 26px;
+}
+.admin-modal-body {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.admin-modal-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+.admin-modal-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 480px) {
+  .admin-project-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ── Recommendations section (top-level nav page) ── */
 .recommendations {

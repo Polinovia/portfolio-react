@@ -39,6 +39,19 @@ function authErrorMessage(err, fallback) {
   return (err && err.json && err.json.msg) || (err && err.message) || fallback
 }
 
+const EMPTY_PROJECT_FORM = {
+  slug: '',
+  name: '',
+  tech: '',
+  description: '',
+  category: 'dev',
+  folder: '',
+  url: '',
+  previewUrl: '',
+  figmaUrl: '',
+  image: '',
+}
+
 export default function AdminApp() {
   const [user, setUser] = useState(() => auth.currentUser())
   const [view, setView] = useState('loading') // loading | setPassword | login | app
@@ -46,6 +59,13 @@ export default function AdminApp() {
   const [busy, setBusy] = useState(false)
   const [pending, setPending] = useState(null)
   const [pendingRecommendations, setPendingRecommendations] = useState(null)
+  const [projects, setProjects] = useState(null)
+  const [projectsError, setProjectsError] = useState(null)
+  const [projectFormMode, setProjectFormMode] = useState(null) // null | 'create' | 'edit'
+  const [projectForm, setProjectForm] = useState(EMPTY_PROJECT_FORM)
+  const [projectFormError, setProjectFormError] = useState(null)
+  const [savingProject, setSavingProject] = useState(false)
+  const [adminTab, setAdminTab] = useState('projects') // projects | reviews
 
   const { invite, recovery } = useMemo(getHashToken, [])
   const pendingToken = invite || recovery
@@ -124,9 +144,118 @@ export default function AdminApp() {
     }
   }, [user])
 
+  const fetchProjects = useCallback(async () => {
+    if (!user) return
+    setProjectsError(null)
+    try {
+      const token = await user.jwt()
+      const res = await fetch('/.netlify/functions/projects-admin', { headers: { Authorization: `Bearer ${token}` } })
+      if (!res.ok) throw new Error('failed to load')
+      const json = await res.json()
+      setProjects(json.projects)
+    } catch {
+      setProjectsError('Could not load projects.')
+    }
+  }, [user])
+
   useEffect(() => {
-    if (view === 'app') fetchPending()
-  }, [view, fetchPending])
+    if (view === 'app') {
+      fetchPending()
+      fetchProjects()
+    }
+  }, [view, fetchPending, fetchProjects])
+
+  const startCreateProject = () => {
+    setProjectForm(EMPTY_PROJECT_FORM)
+    setProjectFormError(null)
+    setProjectFormMode('create')
+  }
+
+  const startEditProject = (project) => {
+    setProjectForm({
+      slug: project.slug,
+      name: project.name,
+      tech: project.tech,
+      description: project.description,
+      category: project.category,
+      folder: project.folder,
+      url: project.url,
+      previewUrl: project.previewUrl || '',
+      figmaUrl: project.figmaUrl || '',
+      image: project.image || '',
+    })
+    setProjectFormError(null)
+    setProjectFormMode('edit')
+  }
+
+  const cancelProjectForm = () => {
+    setProjectFormMode(null)
+    setProjectFormError(null)
+  }
+
+  const handleProjectFormChange = (e) => {
+    const { name, value } = e.target
+    setProjectForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleProjectFormSubmit = async (e) => {
+    e.preventDefault()
+    if (!user) return
+    setProjectFormError(null)
+    setSavingProject(true)
+    try {
+      const token = await user.jwt()
+      const res = await fetch('/.netlify/functions/projects-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          action: projectFormMode === 'edit' ? 'update' : 'create',
+          ...projectForm,
+        }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(json.error || 'Could not save project')
+      setProjectFormMode(null)
+      fetchProjects()
+    } catch (err) {
+      setProjectFormError(err.message || 'Could not save project')
+    } finally {
+      setSavingProject(false)
+    }
+  }
+
+  const handleDeleteProject = async (slug) => {
+    if (!user) return
+    if (!window.confirm(`Delete project "${slug}"? This cannot be undone.`)) return
+    try {
+      const token = await user.jwt()
+      const res = await fetch('/.netlify/functions/projects-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'delete', slug }),
+      })
+      if (!res.ok) throw new Error('failed')
+      fetchProjects()
+    } catch {
+      setProjectsError('Could not delete that project.')
+    }
+  }
+
+  const handleMoveProject = async (slug, direction) => {
+    if (!user) return
+    try {
+      const token = await user.jwt()
+      const res = await fetch('/.netlify/functions/projects-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'move', slug, direction }),
+      })
+      if (!res.ok) throw new Error('failed')
+      fetchProjects()
+    } catch {
+      setProjectsError('Could not reorder that project.')
+    }
+  }
 
   const moderate = async (endpoint, id, action) => {
     if (!user) return
@@ -198,60 +327,233 @@ export default function AdminApp() {
 
       {error && <p className="admin-empty">{error}</p>}
 
-      <div className="admin-title">Pending ratings & comments</div>
+      <div className="admin-tabs">
+        <button
+          className={`admin-tab-btn${adminTab === 'projects' ? ' active' : ''}`}
+          onClick={() => setAdminTab('projects')}
+        >
+          Projects
+        </button>
+        <button
+          className={`admin-tab-btn${adminTab === 'reviews' ? ' active' : ''}`}
+          onClick={() => setAdminTab('reviews')}
+        >
+          Ratings & recommendations
+        </button>
+      </div>
 
-      {pending && pending.length === 0 && (
-        <p className="admin-empty">Nothing waiting for review.</p>
+      {adminTab === 'projects' && (
+        <>
+          {projectsError && <p className="admin-empty">{projectsError}</p>}
+
+          <button className="admin-btn admin-btn-approve" onClick={startCreateProject}>
+            + New project
+          </button>
+
+          {projects && projects.length === 0 && <p className="admin-empty">No projects yet.</p>}
+
+          {projects && projects.length > 0 && (
+            <ul className="admin-projects-list">
+              {projects.map((project, index) => (
+                <li key={project.slug} className="admin-project-row">
+                  <div className="admin-project-order-btns">
+                    <button
+                      className="admin-btn admin-order-btn"
+                      onClick={() => handleMoveProject(project.slug, 'up')}
+                      disabled={index === 0}
+                      aria-label="Move up"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      className="admin-btn admin-order-btn"
+                      onClick={() => handleMoveProject(project.slug, 'down')}
+                      disabled={index === projects.length - 1}
+                      aria-label="Move down"
+                    >
+                      ↓
+                    </button>
+                  </div>
+                  <div className="admin-project-info">
+                    <div className="admin-project-name">{project.name}</div>
+                    <div className="admin-project-meta">
+                      {project.slug} · {project.category}
+                    </div>
+                  </div>
+                  <div className="admin-project-actions">
+                    <button className="admin-btn" onClick={() => startEditProject(project)}>
+                      Edit
+                    </button>
+                    <button className="admin-btn admin-btn-reject" onClick={() => handleDeleteProject(project.slug)}>
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
 
-      {pending && pending.length > 0 && (
-        <ul className="admin-pending-list">
-          {pending.map((item) => (
-            <li key={item.id} className="admin-pending-item">
-              <div className="admin-pending-slug">
-                {item.project_slug} · {item.stars} / 5
-                {item.author_name ? ` · ${item.author_name}` : ''}
-              </div>
-              {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
-              <div className="admin-pending-actions">
-                <button className="admin-btn admin-btn-approve" onClick={() => moderate('ratings-admin', item.id, 'approve')}>
-                  Approve
-                </button>
-                <button className="admin-btn admin-btn-reject" onClick={() => moderate('ratings-admin', item.id, 'reject')}>
-                  Reject
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {adminTab === 'reviews' && (
+        <>
+          <div className="admin-title">Pending ratings & comments</div>
+
+          {pending && pending.length === 0 && (
+            <p className="admin-empty">Nothing waiting for review.</p>
+          )}
+
+          {pending && pending.length > 0 && (
+            <ul className="admin-pending-list">
+              {pending.map((item) => (
+                <li key={item.id} className="admin-pending-item">
+                  <div className="admin-pending-slug">
+                    {item.project_slug} · {item.stars} / 5
+                    {item.author_name ? ` · ${item.author_name}` : ''}
+                  </div>
+                  {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
+                  <div className="admin-pending-actions">
+                    <button className="admin-btn admin-btn-approve" onClick={() => moderate('ratings-admin', item.id, 'approve')}>
+                      Approve
+                    </button>
+                    <button className="admin-btn admin-btn-reject" onClick={() => moderate('ratings-admin', item.id, 'reject')}>
+                      Reject
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="admin-title">Pending recommendations</div>
+
+          {pendingRecommendations && pendingRecommendations.length === 0 && (
+            <p className="admin-empty">Nothing waiting for review.</p>
+          )}
+
+          {pendingRecommendations && pendingRecommendations.length > 0 && (
+            <ul className="admin-pending-list">
+              {pendingRecommendations.map((item) => (
+                <li key={item.id} className="admin-pending-item">
+                  <div className="admin-pending-slug">
+                    {item.author_name}
+                    {item.relationship ? ` · ${item.relationship}` : ''}
+                  </div>
+                  {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
+                  <div className="admin-pending-actions">
+                    <button className="admin-btn admin-btn-approve" onClick={() => moderate('recommendations-admin', item.id, 'approve')}>
+                      Approve
+                    </button>
+                    <button className="admin-btn admin-btn-reject" onClick={() => moderate('recommendations-admin', item.id, 'reject')}>
+                      Reject
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
 
-      <div className="admin-title">Pending recommendations</div>
-
-      {pendingRecommendations && pendingRecommendations.length === 0 && (
-        <p className="admin-empty">Nothing waiting for review.</p>
-      )}
-
-      {pendingRecommendations && pendingRecommendations.length > 0 && (
-        <ul className="admin-pending-list">
-          {pendingRecommendations.map((item) => (
-            <li key={item.id} className="admin-pending-item">
-              <div className="admin-pending-slug">
-                {item.author_name}
-                {item.relationship ? ` · ${item.relationship}` : ''}
-              </div>
-              {item.comment && <p className="admin-pending-comment">{item.comment}</p>}
-              <div className="admin-pending-actions">
-                <button className="admin-btn admin-btn-approve" onClick={() => moderate('recommendations-admin', item.id, 'approve')}>
-                  Approve
-                </button>
-                <button className="admin-btn admin-btn-reject" onClick={() => moderate('recommendations-admin', item.id, 'reject')}>
-                  Reject
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {projectFormMode && (
+        <div className="admin-modal-overlay" onClick={cancelProjectForm}>
+          <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="admin-modal-close" onClick={cancelProjectForm} aria-label="Close">
+              ×
+            </button>
+            <div className="admin-modal-body">
+              <div className="admin-modal-title">{projectFormMode === 'edit' ? 'Edit project' : 'New project'}</div>
+              <form className="admin-project-form" onSubmit={handleProjectFormSubmit}>
+                <div className="admin-project-form-grid">
+                  <input
+                    name="slug"
+                    placeholder="slug (e.g. my-project)"
+                    value={projectForm.slug}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                    required
+                    disabled={projectFormMode === 'edit'}
+                  />
+                  <input
+                    name="name"
+                    placeholder="Name"
+                    value={projectForm.name}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                    required
+                  />
+                  <input
+                    name="tech"
+                    placeholder="Tech (e.g. React · API · UI)"
+                    value={projectForm.tech}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                    required
+                  />
+                  <select name="category" value={projectForm.category} onChange={handleProjectFormChange} className="admin-select">
+                    <option value="dev">dev</option>
+                    <option value="design">design</option>
+                  </select>
+                  <input
+                    name="folder"
+                    placeholder="Folder (e.g. React)"
+                    value={projectForm.folder}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                    required
+                  />
+                  <input
+                    name="url"
+                    placeholder="URL (repo/live link)"
+                    value={projectForm.url}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                    required
+                  />
+                  <input
+                    name="previewUrl"
+                    placeholder="Preview URL (optional)"
+                    value={projectForm.previewUrl}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                  />
+                  <input
+                    name="figmaUrl"
+                    placeholder="Figma URL (optional)"
+                    value={projectForm.figmaUrl}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                  />
+                  <input
+                    name="image"
+                    placeholder="Image path (optional)"
+                    value={projectForm.image}
+                    onChange={handleProjectFormChange}
+                    className="rating-form-name"
+                  />
+                </div>
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={projectForm.description}
+                  onChange={handleProjectFormChange}
+                  className="rating-form-textarea"
+                  rows={3}
+                  required
+                />
+                {projectFormError && <p className="rating-form-error">{projectFormError}</p>}
+                <div className="admin-project-form-actions">
+                  <button type="submit" className="admin-btn admin-btn-approve" disabled={savingProject}>
+                    {savingProject ? 'Saving...' : projectFormMode === 'edit' ? 'Save changes' : 'Create project'}
+                  </button>
+                  <button type="button" className="admin-btn" onClick={cancelProjectForm}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
