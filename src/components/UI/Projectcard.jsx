@@ -17,7 +17,20 @@ const FOLDER_LABELS = {
   Figma: 'Figma',
 }
 
-export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl, figmaUrl, image, folder }) {
+// ~2 short sentences worth of preview text before the card cuts to "... details"
+const CARD_DESCRIPTION_LENGTH = 140
+
+// Cuts at the last full word before the limit, so the preview never ends mid-word.
+function truncateAtWord(text, maxLength) {
+  const cut = text.slice(0, maxLength)
+  const lastSpace = cut.lastIndexOf(' ')
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd()
+}
+
+export default function ProjectCard({ name, tech, description, category, delay = 0, url, previewUrl, figmaUrl, image, folder, truncateDescription = false }) {
+  const isTruncated = truncateDescription && description && description.length > CARD_DESCRIPTION_LENGTH
+  const displayDescription = isTruncated ? `${truncateAtWord(description, CARD_DESCRIPTION_LENGTH)}...` : description
+
   return (
     <div
       className="project-card"
@@ -49,7 +62,12 @@ export default function ProjectCard({ name, tech, description, category, delay =
       <div className="project-tech">{tech}</div>
 
       {/* Description */}
-      {description && <p className="project-description">{description}</p>}
+      {description && (
+        <p className="project-description">
+          {displayDescription}
+          {isTruncated && <span className="project-description-more"> details</span>}
+        </p>
+      )}
 
       {/* Links */}
       <div className="project-actions" onClick={(e) => e.stopPropagation()}>

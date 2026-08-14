@@ -39,6 +39,8 @@ function authErrorMessage(err, fallback) {
   return (err && err.json && err.json.msg) || (err && err.message) || fallback
 }
 
+const MAX_DESCRIPTION_LENGTH = 1000
+
 const EMPTY_PROJECT_FORM = {
   slug: '',
   name: '',
@@ -61,6 +63,7 @@ export default function AdminApp() {
   const [pendingRecommendations, setPendingRecommendations] = useState(null)
   const [projects, setProjects] = useState(null)
   const [projectsError, setProjectsError] = useState(null)
+  const [projectSuccessMessage, setProjectSuccessMessage] = useState(null)
   const [projectFormMode, setProjectFormMode] = useState(null) // null | 'create' | 'edit'
   const [projectForm, setProjectForm] = useState(EMPTY_PROJECT_FORM)
   const [projectFormError, setProjectFormError] = useState(null)
@@ -166,9 +169,16 @@ export default function AdminApp() {
     }
   }, [view, fetchPending, fetchProjects])
 
+  useEffect(() => {
+    if (!projectSuccessMessage) return
+    const timer = setTimeout(() => setProjectSuccessMessage(null), 4000)
+    return () => clearTimeout(timer)
+  }, [projectSuccessMessage])
+
   const startCreateProject = () => {
     setProjectForm(EMPTY_PROJECT_FORM)
     setProjectFormError(null)
+    setProjectSuccessMessage(null)
     setProjectFormMode('create')
   }
 
@@ -186,6 +196,7 @@ export default function AdminApp() {
       image: project.image || '',
     })
     setProjectFormError(null)
+    setProjectSuccessMessage(null)
     setProjectFormMode('edit')
   }
 
@@ -251,7 +262,11 @@ export default function AdminApp() {
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(json.error || 'Could not save project')
+      const wasEdit = projectFormMode === 'edit'
       setProjectFormMode(null)
+      setProjectSuccessMessage(
+        wasEdit ? `"${projectForm.name}" was updated successfully.` : `"${projectForm.name}" was created successfully.`
+      )
       fetchProjects()
     } catch (err) {
       setProjectFormError(err.message || 'Could not save project')
@@ -381,6 +396,7 @@ export default function AdminApp() {
       {adminTab === 'projects' && (
         <>
           {projectsError && <p className="admin-empty">{projectsError}</p>}
+          {projectSuccessMessage && <p className="admin-success-banner">{projectSuccessMessage}</p>}
 
           <button className="admin-btn admin-btn-approve" onClick={startCreateProject}>
             + New project
@@ -615,7 +631,17 @@ export default function AdminApp() {
                   </div>
                 </label>
                 <label className="admin-field">
-                  <span className="admin-field-label">Description</span>
+                  <span className="admin-field-label">
+                    Description
+                    <span
+                      className={
+                        'admin-char-count' +
+                        (projectForm.description.length > MAX_DESCRIPTION_LENGTH ? ' admin-char-count--over' : '')
+                      }
+                    >
+                      {projectForm.description.length} / {MAX_DESCRIPTION_LENGTH}
+                    </span>
+                  </span>
                   <textarea
                     name="description"
                     placeholder="Short description shown on the project card"
@@ -623,6 +649,7 @@ export default function AdminApp() {
                     onChange={handleProjectFormChange}
                     className="rating-form-textarea"
                     rows={3}
+                    maxLength={MAX_DESCRIPTION_LENGTH}
                     required
                   />
                 </label>

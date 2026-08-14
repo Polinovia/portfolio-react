@@ -107,6 +107,7 @@ export default function Projects({ initialProjectSlug }) {
                   figmaUrl={project.figmaUrl}
                   image={project.image}
                   delay={index * 0.05}
+                  truncateDescription
                 />
               </div>
             ))}
