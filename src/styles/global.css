@@ -597,6 +597,80 @@ nav {
   display: block;
 }
 
+/* Loading skeleton, shown in the carousel/mobile list while projects fetch */
+.project-card-skeleton {
+  cursor: default;
+}
+.project-card-skeleton:hover {
+  transform: none;
+  box-shadow: none;
+}
+.skeleton-block {
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--bg) 25%, rgba(255, 255, 255, 0.07) 37%, var(--bg) 63%);
+  background-size: 400% 100%;
+  animation: skeletonShimmer 1.4s ease infinite;
+}
+.skeleton-thumb {
+  margin: -18px -20px 6px;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+}
+.skeleton-badge {
+  width: 64px;
+  height: 16px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+.skeleton-line {
+  height: 12px;
+}
+.skeleton-line--name {
+  width: 60%;
+  height: 14px;
+  margin-top: 2px;
+}
+.skeleton-line--tech {
+  width: 40%;
+  margin-top: 8px;
+}
+.skeleton-line--desc {
+  width: 100%;
+  margin-top: 8px;
+}
+.skeleton-line--desc-short {
+  width: 70%;
+  margin-top: 6px;
+}
+.skeleton-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+.skeleton-pill {
+  width: 64px;
+  height: 22px;
+  border-radius: 999px;
+}
+.project-mobile-item-skeleton {
+  cursor: default;
+}
+.project-mobile-item-skeleton .skeleton-line--name {
+  width: 45%;
+}
+.project-mobile-item-skeleton .skeleton-line--tech {
+  width: 30%;
+}
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
 /* Tech-colored placeholder, shown when a project has no real screenshot */
 .project-thumb-placeholder {
   display: flex;

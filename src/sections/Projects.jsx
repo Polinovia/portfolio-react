@@ -9,6 +9,9 @@ const CARD_GAP = 18
 const ARROW_WIDTH = 34
 const ARROW_GAP = 8
 
+// How many placeholder cards to show while the project list is loading
+const SKELETON_COUNT = 4
+
 export default function Projects({ initialProjectSlug }) {
   const { t } = useTranslation()
   const carouselRef = useRef(null)
@@ -90,6 +93,23 @@ export default function Projects({ initialProjectSlug }) {
           style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
         >
           <div className="project-carousel-track" ref={trackRef}>
+            {!projects &&
+              Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+                <div className="project-carousel-item" key={index}>
+                  <div className="project-card project-card-skeleton" style={{ animationDelay: `${index * 0.05}s` }}>
+                    <div className="skeleton-block skeleton-thumb" />
+                    <div className="skeleton-block skeleton-badge" />
+                    <div className="skeleton-block skeleton-line skeleton-line--name" />
+                    <div className="skeleton-block skeleton-line skeleton-line--tech" />
+                    <div className="skeleton-block skeleton-line skeleton-line--desc" />
+                    <div className="skeleton-block skeleton-line skeleton-line--desc-short" />
+                    <div className="skeleton-actions">
+                      <div className="skeleton-block skeleton-pill" />
+                      <div className="skeleton-block skeleton-pill" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             {projects && projects.map((project, index) => (
               <div
                 className="project-carousel-item"
@@ -126,6 +146,15 @@ export default function Projects({ initialProjectSlug }) {
 
       {/* Mobile-only: tappable list, opens a popup with the full card */}
       <ul className="project-mobile-list">
+        {!projects &&
+          Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+            <li key={index} className="project-mobile-item project-mobile-item-skeleton">
+              <div style={{ width: '100%' }}>
+                <div className="skeleton-block skeleton-line skeleton-line--name" />
+                <div className="skeleton-block skeleton-line skeleton-line--tech" />
+              </div>
+            </li>
+          ))}
         {projects && projects.map((project) => (
           <li
             key={project.slug}
