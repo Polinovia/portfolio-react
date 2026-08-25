@@ -975,7 +975,7 @@ nav {
   flex-wrap: wrap;
 }
 .rating-form-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-muted);
 }
 .rating-form-textarea,
@@ -986,8 +986,8 @@ nav {
   border-radius: 8px;
   color: var(--text);
   font-family: inherit;
-  font-size: 12px;
-  padding: 8px 10px;
+  font-size: 14px;
+  padding: 9px 10px;
   resize: vertical;
   box-sizing: border-box;
 }
@@ -1005,19 +1005,19 @@ nav {
   pointer-events: none;
 }
 .rating-form-error {
-  font-size: 11px;
+  font-size: 13px;
   color: #e2726b;
   margin: 0;
 }
 .rating-form-thanks {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-accent);
   margin: 4px 0 0;
 }
 .rating-form-submit {
   align-self: flex-start;
-  font-size: 12px;
-  padding: 6px 16px;
+  font-size: 14px;
+  padding: 7px 18px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: rgba(124, 60, 191, 0.16);
@@ -1376,18 +1376,18 @@ nav {
   flex-wrap: wrap;
 }
 .recommendation-item-name {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
 }
 .recommendation-item-relationship {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
 }
 .recommendation-item-comment {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 6px 0 0;
 }
 

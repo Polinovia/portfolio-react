@@ -22,6 +22,8 @@ export default function Recommendations() {
 
   return (
     <div className="card recommendations" style={{ animation: 'cardIn 0.5s cubic-bezier(.22,1,.36,1) both' }}>
+      <RecommendationForm onSubmitted={fetchRecommendations} />
+
       {!loading && recommendations && recommendations.length === 0 && (
         <p className="project-ratings-empty">{t('recommendations.noneYet')}</p>
       )}
@@ -39,8 +41,6 @@ export default function Recommendations() {
           ))}
         </ul>
       )}
-
-      <RecommendationForm onSubmitted={fetchRecommendations} />
     </div>
   )
 }

@@ -75,6 +75,9 @@
     "projects": {
       "errorGeneric": "Couldn't load projects, please try again.",
       "retry": "Retry"
+    },
+    "footer": {
+      "downloadCv": "Download CV"
     }
   },
   "FR": {
@@ -153,6 +156,9 @@
     "projects": {
       "errorGeneric": "Impossible de charger les projets, veuillez réessayer.",
       "retry": "Réessayer"
+    },
+    "footer": {
+      "downloadCv": "Télécharger le CV"
     }
   },
   "UA": {
@@ -231,6 +237,9 @@
     "projects": {
       "errorGeneric": "Не вдалося завантажити проєкти, спробуйте ще раз.",
       "retry": "Спробувати ще раз"
+    },
+    "footer": {
+      "downloadCv": "Завантажити CV"
     }
   }
 }

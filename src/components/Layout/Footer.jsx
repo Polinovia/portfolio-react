@@ -8,6 +8,8 @@
 // it with your real info.
 // ─────────────────────────────────────────────
 
+import { useTranslation } from '../../i18n/TranslationProvider'
+
 // All your contact/social links.
 // To add a new one, add an object to this array with:
 // - label: the text shown on the button
@@ -48,6 +50,8 @@ const LINKS = [
 ]
 
 export default function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer>
       <div className="footer-inner">
@@ -68,6 +72,16 @@ export default function Footer() {
               {link.label}
             </a>
           ))}
+
+          {/* CV download - the actual file lives at public/assets/cv.pdf */}
+          <a href="/assets/cv.pdf" className="footer-link" download="Polina-Bevz-CV.pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3v12" />
+              <polyline points="7,10 12,15 17,10" />
+              <path d="M4 19h16" />
+            </svg>
+            {t('footer.downloadCv')}
+          </a>
         </div>
 
         {/* Copyright line */}
