@@ -26,10 +26,10 @@ export default function RecommendationForm({ onSubmitted }) {
       if (!res.ok) throw new Error('submit failed')
 
       setStatus('done')
+      if (onSubmitted) onSubmitted({ authorName, relationship, comment })
       setAuthorName('')
       setRelationship('')
       setComment('')
-      if (onSubmitted) onSubmitted()
     } catch {
       setStatus('error')
     }

@@ -70,7 +70,9 @@
       "errorName": "Please enter your name.",
       "errorComment": "Please write a comment.",
       "errorGeneric": "Something went wrong, please try again.",
-      "noneYet": "No recommendations yet - be the first!"
+      "noneYet": "No recommendations yet - be the first!",
+      "verifiedBadge": "Verified",
+      "pendingBadge": "Pending verification"
     },
     "projects": {
       "errorGeneric": "Couldn't load projects, please try again.",
@@ -151,7 +153,9 @@
       "errorName": "Merci d'indiquer votre nom.",
       "errorComment": "Merci d'écrire un commentaire.",
       "errorGeneric": "Une erreur est survenue, veuillez réessayer.",
-      "noneYet": "Pas encore de recommandations - soyez le premier !"
+      "noneYet": "Pas encore de recommandations - soyez le premier !",
+      "verifiedBadge": "Validé",
+      "pendingBadge": "En attente de vérification"
     },
     "projects": {
       "errorGeneric": "Impossible de charger les projets, veuillez réessayer.",
@@ -232,7 +236,9 @@
       "errorName": "Будь ласка, вкажіть ваше ім'я.",
       "errorComment": "Будь ласка, напишіть відгук.",
       "errorGeneric": "Щось пішло не так, спробуйте ще раз.",
-      "noneYet": "Рекомендацій ще немає - станьте першими!"
+      "noneYet": "Рекомендацій ще немає - станьте першими!",
+      "verifiedBadge": "Перевірено",
+      "pendingBadge": "Очікує перевірки"
     },
     "projects": {
       "errorGeneric": "Не вдалося завантажити проєкти, спробуйте ще раз.",

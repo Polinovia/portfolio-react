@@ -11,12 +11,14 @@ import {
   SiSass,
   SiNodedotjs,
   SiPhp,
+  SiDocker,
   SiGit,
   SiPhpmyadmin,
   SiFigma,
   SiWordpress,
   SiGooglechrome,
 } from 'react-icons/si'
+import { TbBrandAdobePhotoshop } from 'react-icons/tb'
 
 // ── Data ──────────────────────────────────────
 // Each group has a title and a list of skills.
@@ -39,6 +41,7 @@ const SKILL_GROUPS = [
     skills: [
       { name: 'Node.js', Icon: SiNodedotjs, bg: '#0f2318', color: '#339933' },
       { name: 'PHP', Icon: SiPhp, bg: '#1c1e3a', color: '#8892bf' },
+      { name: 'Docker', Icon: SiDocker, bg: '#0b1f33', color: '#2496ed' },
       { name: 'Git', Icon: SiGit, bg: '#20130f', color: '#f05032' },
       { name: 'phpMyAdmin', Icon: SiPhpmyadmin, bg: '#1a1c33', color: '#6c78af' },
     ],
@@ -47,6 +50,7 @@ const SKILL_GROUPS = [
     title: 'Design & Other',
     skills: [
       { name: 'Figma', Icon: SiFigma, bg: '#1e1626', color: '#a259ff' },
+      { name: 'Photoshop', Icon: TbBrandAdobePhotoshop, bg: '#001e2b', color: '#31a8ff' },
       { name: 'WordPress', Icon: SiWordpress, bg: '#0d1b25', color: '#21759b' },
       { name: 'Chrome Extension', Icon: SiGooglechrome, bg: '#151f30', color: '#4285f4' },
     ],

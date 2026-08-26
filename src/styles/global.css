@@ -478,13 +478,24 @@ nav {
   flex-shrink: 0;
 }
 
-/* Project carousel - horizontally scrolling row of cards, no folder grouping */
-.project-carousel {
-  position: relative;
+/* Project grid - 2-column layout on desktop/tablet, more cards lazy-load in as you scroll */
+.project-grid-wrap {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
+  flex-direction: column;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.project-grid .project-card {
+  cursor: pointer;
+}
+.project-grid .project-card-skeleton {
+  cursor: default;
+}
+.project-grid-sentinel {
+  height: 1px;
 }
 
 .projects-error {
@@ -511,57 +522,6 @@ nav {
 }
 .projects-error-retry:hover {
   border-color: var(--border-hover);
-}
-
-.project-carousel-viewport {
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.project-carousel-track {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 4px 2px 12px;
-  scrollbar-width: none;
-}
-.project-carousel-track::-webkit-scrollbar {
-  display: none;
-}
-
-.project-carousel-item {
-  flex: 0 0 260px;
-  scroll-snap-align: start;
-  display: flex;
-  cursor: pointer;
-}
-.project-carousel-item .project-card {
-  width: 100%;
-}
-
-.carousel-arrow {
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  color: var(--text-muted);
-  font-size: 20px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-.carousel-arrow:hover {
-  color: var(--text-accent);
-  border-color: var(--border-hover);
-  background: rgba(124, 60, 191, 0.16);
 }
 
 /* Project card */
@@ -699,6 +659,24 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+/* Small badge showing which language/framework the project is written in - reuses
+   the .thumb-* gradients so it stays visually tied to the placeholder colors. */
+.lang-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: default;
 }
 .project-description {
   font-size: 12px;
@@ -1390,6 +1368,37 @@ nav {
   line-height: 1.6;
   margin: 6px 0 0;
 }
+.recommendation-item--pending {
+  border-color: rgba(224, 168, 96, 0.35);
+  background: rgba(224, 168, 96, 0.06);
+}
+.recommendation-status {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.recommendation-status svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+.recommendation-status--verified {
+  color: #4caf79;
+  background: rgba(76, 175, 121, 0.12);
+  border: 1px solid rgba(76, 175, 121, 0.3);
+}
+.recommendation-status--pending {
+  color: #e0a860;
+  background: rgba(224, 168, 96, 0.12);
+  border: 1px solid rgba(224, 168, 96, 0.35);
+}
 
 /* ── Footer ───────────────────────────────────
      Always visible at the bottom of the page     */
@@ -1581,8 +1590,8 @@ footer {
     gap: 18px;
   }
 
-  /* Projects: swap the arrow carousel for a tappable list + popup */
-  .project-carousel {
+  /* Projects: swap the 2x2 grid for a tappable list + popup */
+  .project-grid-wrap {
     display: none;
   }
   .project-mobile-list {

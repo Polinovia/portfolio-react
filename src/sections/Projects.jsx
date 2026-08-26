@@ -3,23 +3,16 @@ import ProjectCard from '../components/UI/Projectcard'
 import ProjectRatings from '../components/UI/ProjectRatings'
 import { useTranslation } from '../i18n/TranslationProvider'
 
-// Must match .project-carousel-item / .carousel-arrow sizing in global.css
-const CARD_WIDTH = 260
-const CARD_GAP = 18
-const ARROW_WIDTH = 34
-const ARROW_GAP = 8
-
-// How many placeholder cards to show while the project list is loading
-const SKELETON_COUNT = 4
+// Desktop/tablet grid: 2 columns, 4 cards per "batch" - more load in as you scroll down
+const BATCH_SIZE = 4
 
 export default function Projects({ initialProjectSlug }) {
   const { t } = useTranslation()
-  const carouselRef = useRef(null)
-  const trackRef = useRef(null)
-  const [viewportWidth, setViewportWidth] = useState(null)
   const [projects, setProjects] = useState(null)
   const [error, setError] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null)
+  const [visibleCount, setVisibleCount] = useState(BATCH_SIZE)
+  const sentinelRef = useRef(null)
 
   const fetchProjects = useCallback(() => {
     setError(false)
@@ -33,37 +26,37 @@ export default function Projects({ initialProjectSlug }) {
     fetchProjects()
   }, [fetchProjects])
 
-  // Resolves the #projects/<slug> deep link once the project list has
-  // loaded (it can't resolve synchronously anymore now that data is fetched).
+  // Resolves the #projects/<slug> deep link once the project list has loaded
+  // (it can't resolve synchronously anymore now that data is fetched), and
+  // reveals enough of the grid for that project's card to already be in it.
   useEffect(() => {
     if (!projects || !initialProjectSlug || selectedProject) return
-    const match = projects.find((p) => p.slug === initialProjectSlug)
-    if (match) setSelectedProject(match)
+    const index = projects.findIndex((p) => p.slug === initialProjectSlug)
+    if (index !== -1) {
+      setSelectedProject(projects[index])
+      setVisibleCount((c) => Math.max(c, index + 1))
+    }
   }, [projects, initialProjectSlug, selectedProject])
 
-  // Clip the viewport to a width that fits a whole number of cards, so no
-  // card is ever half-visible at the edge - it either fully shows or scrolls off.
+  // Lazy-load more cards into the grid as the user scrolls near the bottom.
   useEffect(() => {
-    const el = carouselRef.current
-    if (!el) return
+    if (!projects || visibleCount >= projects.length) return
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
 
-    const recompute = () => {
-      const available = el.clientWidth - 2 * (ARROW_WIDTH + ARROW_GAP)
-      const cardsPerView = Math.max(1, Math.floor((available + CARD_GAP) / (CARD_WIDTH + CARD_GAP)))
-      setViewportWidth(cardsPerView * (CARD_WIDTH + CARD_GAP) - CARD_GAP)
-    }
-
-    recompute()
-    const observer = new ResizeObserver(recompute)
-    observer.observe(el)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((c) => Math.min(projects.length, c + BATCH_SIZE))
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [])
+  }, [projects, visibleCount])
 
-  const scrollByCards = (direction) => {
-    const track = trackRef.current
-    if (!track) return
-    track.scrollBy({ left: direction * track.clientWidth * 0.85, behavior: 'smooth' })
-  }
+  const visibleProjects = projects ? projects.slice(0, visibleCount) : null
 
   if (error) {
     return (
@@ -78,76 +71,51 @@ export default function Projects({ initialProjectSlug }) {
 
   return (
     <>
-      <div className="project-carousel" ref={carouselRef}>
-        <button
-          type="button"
-          className="carousel-arrow carousel-arrow--prev"
-          onClick={() => scrollByCards(-1)}
-          aria-label="Scroll projects left"
-        >
-          ‹
-        </button>
-
-        <div
-          className="project-carousel-viewport"
-          style={viewportWidth ? { width: viewportWidth, flex: `0 0 ${viewportWidth}px` } : undefined}
-        >
-          <div className="project-carousel-track" ref={trackRef}>
-            {!projects &&
-              Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-                <div className="project-carousel-item" key={index}>
-                  <div className="project-card project-card-skeleton" style={{ animationDelay: `${index * 0.05}s` }}>
-                    <div className="skeleton-block skeleton-thumb" />
-                    <div className="skeleton-block skeleton-badge" />
-                    <div className="skeleton-block skeleton-line skeleton-line--name" />
-                    <div className="skeleton-block skeleton-line skeleton-line--tech" />
-                    <div className="skeleton-block skeleton-line skeleton-line--desc" />
-                    <div className="skeleton-block skeleton-line skeleton-line--desc-short" />
-                    <div className="skeleton-actions">
-                      <div className="skeleton-block skeleton-pill" />
-                      <div className="skeleton-block skeleton-pill" />
-                    </div>
-                  </div>
+      {/* Desktop/tablet: 2-column grid, more cards load in as you scroll down */}
+      <div className="project-grid-wrap">
+        <div className="project-grid">
+          {!projects &&
+            Array.from({ length: BATCH_SIZE }).map((_, index) => (
+              <div className="project-card project-card-skeleton" key={index} style={{ animationDelay: `${index * 0.05}s` }}>
+                <div className="skeleton-block skeleton-thumb" />
+                <div className="skeleton-block skeleton-badge" />
+                <div className="skeleton-block skeleton-line skeleton-line--name" />
+                <div className="skeleton-block skeleton-line skeleton-line--tech" />
+                <div className="skeleton-block skeleton-line skeleton-line--desc" />
+                <div className="skeleton-block skeleton-line skeleton-line--desc-short" />
+                <div className="skeleton-actions">
+                  <div className="skeleton-block skeleton-pill" />
+                  <div className="skeleton-block skeleton-pill" />
                 </div>
-              ))}
-            {projects && projects.map((project, index) => (
-              <div
-                className="project-carousel-item"
-                key={project.slug}
-                onClick={() => setSelectedProject(project)}
-              >
-                <ProjectCard
-                  name={project.name}
-                  tech={project.tech}
-                  description={project.description}
-                  category={project.category}
-                  folder={project.folder}
-                  url={project.url}
-                  previewUrl={project.previewUrl}
-                  figmaUrl={project.figmaUrl}
-                  image={project.image}
-                  delay={index * 0.05}
-                  truncateDescription
-                />
               </div>
             ))}
-          </div>
+          {visibleProjects && visibleProjects.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              name={project.name}
+              tech={project.tech}
+              description={project.description}
+              category={project.category}
+              folder={project.folder}
+              url={project.url}
+              previewUrl={project.previewUrl}
+              figmaUrl={project.figmaUrl}
+              image={project.image}
+              delay={(index % BATCH_SIZE) * 0.05}
+              truncateDescription
+              onClick={() => setSelectedProject(project)}
+            />
+          ))}
         </div>
 
-        <button
-          type="button"
-          className="carousel-arrow carousel-arrow--next"
-          onClick={() => scrollByCards(1)}
-          aria-label="Scroll projects right"
-        >
-          ›
-        </button>
+        {/* Invisible marker - loads the next batch once it scrolls into view */}
+        {projects && visibleCount < projects.length && <div ref={sentinelRef} className="project-grid-sentinel" />}
       </div>
 
       {/* Mobile-only: tappable list, opens a popup with the full card */}
       <ul className="project-mobile-list">
         {!projects &&
-          Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+          Array.from({ length: BATCH_SIZE }).map((_, index) => (
             <li key={index} className="project-mobile-item project-mobile-item-skeleton">
               <div style={{ width: '100%' }}>
                 <div className="skeleton-block skeleton-line skeleton-line--name" />
