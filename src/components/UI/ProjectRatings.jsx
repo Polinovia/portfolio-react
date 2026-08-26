@@ -26,6 +26,14 @@ export default function ProjectRatings({ projectSlug }) {
     <div className="project-ratings">
       <div className="project-ratings-header">{t('ratings.title')}</div>
 
+      {loading && (
+        <div className="project-ratings-skeleton">
+          <div className="skeleton-block skeleton-ratings-summary" />
+          <div className="skeleton-block skeleton-ratings-item" />
+          <div className="skeleton-block skeleton-ratings-item" />
+        </div>
+      )}
+
       {!loading && data && data.count > 0 && (
         <div className="project-ratings-summary">
           <RatingStars value={data.average || 0} />
