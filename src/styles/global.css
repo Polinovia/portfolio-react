@@ -447,7 +447,8 @@ nav {
 .job-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   padding: 15px 0;
   border-bottom: 1px solid rgba(124, 92, 191, 0.12);
   animation: rowIn 0.4s ease both;
@@ -466,6 +467,18 @@ nav {
   font-size: 13px;
   color: var(--text-muted);
   margin-top: 3px;
+}
+.job-highlights {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.job-highlights li {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 .period-tag {
   background: rgba(124, 92, 191, 0.16);
