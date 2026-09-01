@@ -83,13 +83,18 @@
 
   /* Type scale - every font-size in the app should be one of these 5.
      Keeps the UI from accumulating one-off sizes (12px, 12.5px, 13px...)
-     as components get added over time. */
-  --fs-xs:   11px; /* micro labels, badges, pills, footer meta */
-  --fs-sm:   13px; /* secondary/meta text, form labels, small buttons */
-  --fs-base: 14px; /* standard body/UI text */
-  --fs-lg:   16px; /* emphasized text: names, bio, timeline, recommendations */
-  --fs-xl:   18px; /* subheadings, modal titles, admin title */
-  --fs-hero: 34px; /* the one deliberate exception: the big purple banner title */
+     as components get added over time.
+
+     Each is a clamp(min, preferred, max): flat at the min size up to a
+     1440px-wide viewport (nothing changes on mobile/laptop), then scales
+     up smoothly through large/wide monitors, capping at the max around
+     2560px so text doesn't just keep growing on ultrawide screens. */
+  --fs-xs:   clamp(11px, 8.43px + 0.179vw, 13px); /* micro labels, badges, pills, footer meta */
+  --fs-sm:   clamp(13px, 10.43px + 0.179vw, 15px); /* secondary/meta text, form labels, small buttons */
+  --fs-base: clamp(14px, 11.43px + 0.179vw, 16px); /* standard body/UI text */
+  --fs-lg:   clamp(16px, 12.14px + 0.268vw, 19px); /* emphasized text: names, bio, timeline, recommendations */
+  --fs-xl:   clamp(18px, 12.86px + 0.357vw, 22px); /* subheadings, modal titles, admin title */
+  --fs-hero: clamp(34px, 21.14px + 0.893vw, 44px); /* the one deliberate exception: the big purple banner title */
 
   /* ── Spacing ──────────────────────────────
      Consistent spacing scale                  */
