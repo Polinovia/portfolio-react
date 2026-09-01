@@ -447,7 +447,9 @@ nav {
 }
 .job-company {
   font-size: var(--fs-sm);
-  color: var(--text-muted);
+  color: var(--text-accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   margin-top: 3px;
 }
 .job-highlights {
@@ -458,7 +460,7 @@ nav {
   gap: 4px;
 }
 .job-highlights li {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-base);
   color: var(--text-muted);
   line-height: 1.5;
 }

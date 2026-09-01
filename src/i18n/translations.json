@@ -40,7 +40,7 @@
       { "date": "10.04.25", "text": "Started Web Design formation at CEPEGRA" }
     ],
     "jobs": [
-      { "role": "Front-end Developer", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Contributed to the redesign and improvement of a perfumery's website on the Jimdo platform."] },
+      { "role": "Web Designer", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Redesigned and updated a perfumery's website using the Jimdo no-code website builder - layout, content and visual changes, no custom code."] },
       { "role": "Front-end Developer", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Worked in a cross-functional team on \"Plan Culture,\" a group project for Forem: Secteur Vert, alongside a backend developer, UX/UI designer, business analyst and data analysts.", "Built the Vue.js front-end, integrating with the team's PostgreSQL, TypeScript and Nest.js back-end."] },
       { "role": "Front-end Developer", "company": "CEPEGRA · Training program", "period": "May 2025 – Oct 2025", "highlights": ["Trained across React/Vue.js, Node.js, PHP, WordPress (ACF) and MySQL, plus API integration and AI-assisted automation.", "Delivered a team final project over a 4-week sprint."] },
       { "role": "Web Designer", "company": "CEPEGRA · Training program", "period": "10 – 25 Apr 2025", "highlights": ["Built \"Tec on me,\" a geolocation-based web app (teconmebp.netlify.app)."] },
@@ -124,7 +124,7 @@
       { "date": "10.04.25", "text": "Début de la formation Web Design au CEPEGRA" }
     ],
     "jobs": [
-      { "role": "Développeur front-end", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Participation au redesign et à l'amélioration du site web d'une parfumerie sur la plateforme Jimdo."] },
+      { "role": "Designer Web", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Refonte et mise à jour du site web d'une parfumerie avec l'éditeur no-code Jimdo - mise en page, contenu et visuels, sans code personnalisé."] },
       { "role": "Développeur front-end", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Travail en équipe pluridisciplinaire sur « Plan Culture », un projet de groupe pour le Forem : Secteur Vert, aux côtés de développeur back-end, UX/UI designer, business analyst et data analysts.", "Développement du front-end en Vue.js, intégré au back-end de l'équipe (PostgreSQL, TypeScript, Nest.js)."] },
       { "role": "Développeur front-end", "company": "CEPEGRA · Formation", "period": "May 2025 – Oct 2025", "highlights": ["Formation sur React/Vue.js, Node.js, PHP, WordPress (ACF) et MySQL, ainsi que l'intégration d'API et l'automatisation assistée par IA.", "Réalisation d'un projet final en équipe sur 4 semaines."] },
       { "role": "Designer Web", "company": "CEPEGRA · Formation", "period": "10 – 25 avr. 2025", "highlights": ["Développement de « Tec on me », une application web basée sur la géolocalisation (teconmebp.netlify.app)."] },
@@ -208,7 +208,7 @@
       { "date": "10.04.25", "text": "Почала навчання з веб-дизайну в CEPEGRA" }
     ],
     "jobs": [
-      { "role": "Фронтенд-розробниця", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Брала участь у редизайні та вдосконаленні сайту парфумерії на платформі Jimdo."] },
+      { "role": "Веб-дизайнерка", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Оновила дизайн сайту парфумерії за допомогою no-code конструктора Jimdo - верстка, контент та візуал, без написання коду."] },
       { "role": "Фронтенд-розробниця", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Працювала в міждисциплінарній команді над проєктом «Plan Culture» для Forem: Secteur Vert, разом із бекенд-розробником, UX/UI-дизайнеркою, бізнес-аналітиком та дата-аналітиками.", "Розробляла фронтенд на Vue.js, інтегруючи його з бекендом команди (PostgreSQL, TypeScript, Nest.js)."] },
       { "role": "Фронтенд-розробниця", "company": "CEPEGRA · Навчання", "period": "May 2025 – Oct 2025", "highlights": ["Навчання з React/Vue.js, Node.js, PHP, WordPress (ACF) та MySQL, а також інтеграції API й автоматизації на основі ШІ.", "Реалізувала командний фінальний проєкт за 4-тижневий спринт."] },
       { "role": "Веб-дизайнерка", "company": "CEPEGRA · Навчання", "period": "10 – 25 квіт. 2025", "highlights": ["Розробила «Tec on me» — вебзастосунок на основі геолокації (teconmebp.netlify.app)."] },
