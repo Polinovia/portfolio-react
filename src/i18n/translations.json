@@ -45,7 +45,7 @@
       { "role": "Front-end Developer", "company": "CEPEGRA · Training program", "period": "May 2025 – Oct 2025", "highlights": ["Trained across React/Vue.js, Node.js, PHP, WordPress (ACF) and MySQL, plus API integration and AI-assisted automation.", "Delivered a team final project over a 4-week sprint."] },
       { "role": "Web Designer", "company": "CEPEGRA · Training program", "period": "10 – 25 Apr 2025", "highlights": ["Built \"Tec on me,\" a geolocation-based web app (teconmebp.netlify.app)."] },
       { "role": "Web Designer", "company": "Sante Group Companies · Internship", "period": "Sep 2023 – Nov 2023", "highlights": ["Started with foundational training in Microsoft Power Platform and SharePoint."] },
-      { "role": "Junior Programmer", "company": "Fozzy Group · Internship", "period": "Sep 2019 – Jun 2020", "highlights": ["Programmed websites in HTML/CSS and JavaScript using Visual Studio Code."] }
+      { "role": "Front-end Developer", "company": "Fozzy Group · Internship", "period": "Sep 2019 – Jun 2020", "highlights": ["Programmed websites in HTML/CSS and JavaScript using Visual Studio Code."] }
     ],
     "ratings": {
       "title": "Ratings & comments",
@@ -129,7 +129,7 @@
       { "role": "Développeur front-end", "company": "CEPEGRA · Formation", "period": "May 2025 – Oct 2025", "highlights": ["Formation sur React/Vue.js, Node.js, PHP, WordPress (ACF) et MySQL, ainsi que l'intégration d'API et l'automatisation assistée par IA.", "Réalisation d'un projet final en équipe sur 4 semaines."] },
       { "role": "Designer Web", "company": "CEPEGRA · Formation", "period": "10 – 25 avr. 2025", "highlights": ["Développement de « Tec on me », une application web basée sur la géolocalisation (teconmebp.netlify.app)."] },
       { "role": "Designer Web", "company": "Sante Group Companies · Stage", "period": "Sep 2023 – Nov 2023", "highlights": ["Début du stage avec une formation de base sur Power Platform et SharePoint de Microsoft."] },
-      { "role": "Programmeur junior", "company": "Fozzy Group · Stage", "period": "Sep 2019 – Jun 2020", "highlights": ["Programmation de sites web en HTML/CSS et JavaScript avec Visual Studio Code."] }
+      { "role": "Développeur front-end", "company": "Fozzy Group · Stage", "period": "Sep 2019 – Jun 2020", "highlights": ["Programmation de sites web en HTML/CSS et JavaScript avec Visual Studio Code."] }
     ],
     "ratings": {
       "title": "Avis et commentaires",
@@ -213,7 +213,7 @@
       { "role": "Фронтенд-розробниця", "company": "CEPEGRA · Навчання", "period": "May 2025 – Oct 2025", "highlights": ["Навчання з React/Vue.js, Node.js, PHP, WordPress (ACF) та MySQL, а також інтеграції API й автоматизації на основі ШІ.", "Реалізувала командний фінальний проєкт за 4-тижневий спринт."] },
       { "role": "Веб-дизайнерка", "company": "CEPEGRA · Навчання", "period": "10 – 25 квіт. 2025", "highlights": ["Розробила «Tec on me» — вебзастосунок на основі геолокації (teconmebp.netlify.app)."] },
       { "role": "Веб-дизайнерка", "company": "Sante Group Companies · Стажування", "period": "Sep 2023 – Nov 2023", "highlights": ["Стажування почалося з базового навчання Microsoft Power Platform та SharePoint."] },
-      { "role": "Молодший програміст", "company": "Fozzy Group · Стажування", "period": "Sep 2019 – Jun 2020", "highlights": ["Писала код для сайтів на HTML/CSS та JavaScript у Visual Studio Code."] }
+      { "role": "Фронтенд-розробниця", "company": "Fozzy Group · Стажування", "period": "Sep 2019 – Jun 2020", "highlights": ["Писала код для сайтів на HTML/CSS та JavaScript у Visual Studio Code."] }
     ],
     "ratings": {
       "title": "Оцінки й відгуки",
