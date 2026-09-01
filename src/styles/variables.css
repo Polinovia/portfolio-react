@@ -81,6 +81,16 @@
   --font-body:    'EB Garamond', serif;  /* paragraphs, bio text - classic book font */
   --font-hero:    'Playfair Display', serif; /* section hero title banner */
 
+  /* Type scale - every font-size in the app should be one of these 5.
+     Keeps the UI from accumulating one-off sizes (12px, 12.5px, 13px...)
+     as components get added over time. */
+  --fs-xs:   11px; /* micro labels, badges, pills, footer meta */
+  --fs-sm:   13px; /* secondary/meta text, form labels, small buttons */
+  --fs-base: 14px; /* standard body/UI text */
+  --fs-lg:   16px; /* emphasized text: names, bio, timeline, recommendations */
+  --fs-xl:   18px; /* subheadings, modal titles, admin title */
+  --fs-hero: 34px; /* the one deliberate exception: the big purple banner title */
+
   /* ── Spacing ──────────────────────────────
      Consistent spacing scale                  */
   --radius-sm:  5px;   /* small elements like date pills */
