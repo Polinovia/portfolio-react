@@ -13,6 +13,11 @@ export default function Projects({ initialProjectSlug }) {
   const [selectedProject, setSelectedProject] = useState(null)
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE)
   const sentinelRef = useRef(null)
+  // Tracks whether the #projects/<slug> deep link has already been opened once,
+  // so closing that modal doesn't immediately reopen it (initialProjectSlug never
+  // changes, so without this the effect below would re-fire every time
+  // selectedProject goes back to null and the modal would be impossible to close).
+  const deepLinkResolvedRef = useRef(false)
 
   const fetchProjects = useCallback(() => {
     setError(false)
@@ -30,13 +35,14 @@ export default function Projects({ initialProjectSlug }) {
   // (it can't resolve synchronously anymore now that data is fetched), and
   // reveals enough of the grid for that project's card to already be in it.
   useEffect(() => {
-    if (!projects || !initialProjectSlug || selectedProject) return
+    if (!projects || !initialProjectSlug || deepLinkResolvedRef.current) return
+    deepLinkResolvedRef.current = true
     const index = projects.findIndex((p) => p.slug === initialProjectSlug)
     if (index !== -1) {
       setSelectedProject(projects[index])
       setVisibleCount((c) => Math.max(c, index + 1))
     }
-  }, [projects, initialProjectSlug, selectedProject])
+  }, [projects, initialProjectSlug])
 
   // Lazy-load more cards into the grid as the user scrolls near the bottom.
   useEffect(() => {
