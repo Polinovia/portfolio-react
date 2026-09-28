@@ -22,6 +22,10 @@
       "Outside of code, I'm always looking for new ways to express myself: through collage, drawing, writing, or getting lost in music. Right now, I'm excited to bring that mix of curiosity and craft to a new team and the next chapter of my career."
     ],
     "news": [
+      { "date": "11.08.26", "text": "Added a working version of \"Who Where What\" to the portfolio" },
+      { "date": "10.08.26", "text": "Started building \"Dragons Den,\" a website for a writer" },
+      { "date": "08.08.26", "text": "Designed \"Who Where What\" in Figma and built it with AI-assisted coding" },
+      { "date": "20.07.26", "text": "Started volunteering as a web developer for Open Doors (Wix)" },
       { "date": "02.06.26", "text": "Completed internship at NezZen" },
       { "date": "13.05.26", "text": "Built a Chrome extension to manage Jimdo with a new design, for non-programmers" },
       { "date": "07.04.26", "text": "Started internship (stage) at NezZen" },
@@ -40,6 +44,7 @@
       { "date": "10.04.25", "text": "Started Web Design formation at CEPEGRA" }
     ],
     "jobs": [
+      { "role": "Volunteer Web Developer", "company": "Open Doors · Volunteer", "period": "Jul 2026 – Present", "highlights": ["Manage the visual design and functionality of the organization's Wix website, making sure everything displays correctly on both desktop and mobile.", "Currently preparing an English version of the site."] },
       { "role": "Web Designer", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Redesigned and updated a perfumery's website using the Jimdo no-code website builder - layout, content and visual changes, no custom code."] },
       { "role": "Front-end Developer", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Worked in a cross-functional team on \"Plan Culture,\" a group project for Forem: Secteur Vert, alongside a backend developer, UX/UI designer, business analyst and data analysts.", "Built the Vue.js front-end, integrating with the team's PostgreSQL, TypeScript and Nest.js back-end."] },
       { "role": "Front-end Developer", "company": "CEPEGRA · Training program", "period": "May 2025 – Oct 2025", "highlights": ["Trained across React/Vue.js, Node.js, PHP, WordPress (ACF) and MySQL, plus API integration and AI-assisted automation.", "Delivered a team final project over a 4-week sprint."] },
@@ -106,6 +111,10 @@
       "En dehors du code, je cherche toujours de nouvelles façons de m'exprimer : par le collage, le dessin, l'écriture, ou en me perdant dans la musique. En ce moment, j'ai hâte d'apporter ce mélange de curiosité et de savoir-faire à une nouvelle équipe et au prochain chapitre de ma carrière."
     ],
     "news": [
+      { "date": "11.08.26", "text": "Ajout d'une version fonctionnelle de « Who Where What » au portfolio" },
+      { "date": "10.08.26", "text": "Début de la création de « Dragons Den », un site web pour un écrivain" },
+      { "date": "08.08.26", "text": "Design de « Who Where What » dans Figma, développé avec l'aide de l'IA" },
+      { "date": "20.07.26", "text": "Début du bénévolat comme développeuse web pour Open Doors (Wix)" },
       { "date": "02.06.26", "text": "Fin du stage chez NezZen" },
       { "date": "13.05.26", "text": "Développement d'une extension Chrome pour gérer Jimdo avec un nouveau design, pour les non-développeurs" },
       { "date": "07.04.26", "text": "Début du stage chez NezZen" },
@@ -124,6 +133,7 @@
       { "date": "10.04.25", "text": "Début de la formation Web Design au CEPEGRA" }
     ],
     "jobs": [
+      { "role": "Bénévole développeuse web", "company": "Open Doors · Bénévolat", "period": "Jul 2026 – Present", "highlights": ["Gère le visuel et les fonctionnalités du site de l'association sur Wix, en veillant à ce que tout s'affiche correctement sur desktop et mobile.", "Prépare actuellement une version anglaise du site."] },
       { "role": "Designer Web", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Refonte et mise à jour du site web d'une parfumerie avec l'éditeur no-code Jimdo - mise en page, contenu et visuels, sans code personnalisé."] },
       { "role": "Développeur front-end", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Travail en équipe pluridisciplinaire sur « Plan Culture », un projet de groupe pour le Forem : Secteur Vert, aux côtés de développeur back-end, UX/UI designer, business analyst et data analysts.", "Développement du front-end en Vue.js, intégré au back-end de l'équipe (PostgreSQL, TypeScript, Nest.js)."] },
       { "role": "Développeur front-end", "company": "CEPEGRA · Formation", "period": "May 2025 – Oct 2025", "highlights": ["Formation sur React/Vue.js, Node.js, PHP, WordPress (ACF) et MySQL, ainsi que l'intégration d'API et l'automatisation assistée par IA.", "Réalisation d'un projet final en équipe sur 4 semaines."] },
@@ -190,6 +200,10 @@
       "А поза роботою я постійно шукаю нові способи виразити себе - через колаж, малювання, письмо чи музику, в яку можна поринути з головою. Зараз мені хочеться принести цю суміш допитливості й майстерності в нову команду й новий етап моєї кар'єри."
     ],
     "news": [
+      { "date": "11.08.26", "text": "Додала робочу версію «Who Where What» до портфоліо" },
+      { "date": "10.08.26", "text": "Почала розробляти «Dragons Den» — сайт для письменника" },
+      { "date": "08.08.26", "text": "Дизайн «Who Where What» у Figma, розробила за допомогою ШІ" },
+      { "date": "20.07.26", "text": "Почала волонтерити як веброзробниця для Open Doors (Wix)" },
       { "date": "02.06.26", "text": "Завершила стажування в NezZen" },
       { "date": "13.05.26", "text": "Розробила розширення для Chrome для керування Jimdo з новим дизайном, для непрограмістів" },
       { "date": "07.04.26", "text": "Почала стажування в NezZen" },
@@ -208,6 +222,7 @@
       { "date": "10.04.25", "text": "Почала навчання з веб-дизайну в CEPEGRA" }
     ],
     "jobs": [
+      { "role": "Волонтерка-веброзробниця", "company": "Open Doors · Волонтерство", "period": "Jul 2026 – Present", "highlights": ["Відповідає за візуал та функціональність сайту організації на Wix, стежить, щоб усе коректно відображалося на десктопі й мобільному.", "Зараз готує англомовну версію сайту."] },
       { "role": "Веб-дизайнерка", "company": "NezZen", "period": "Apr 2026 – Jun 2026", "highlights": ["Оновила дизайн сайту парфумерії за допомогою no-code конструктора Jimdo - верстка, контент та візуал, без написання коду."] },
       { "role": "Фронтенд-розробниця", "company": "PlayZone", "period": "Nov 2025 – Dec 2025", "highlights": ["Працювала в міждисциплінарній команді над проєктом «Plan Culture» для Forem: Secteur Vert, разом із бекенд-розробником, UX/UI-дизайнеркою, бізнес-аналітиком та дата-аналітиками.", "Розробляла фронтенд на Vue.js, інтегруючи його з бекендом команди (PostgreSQL, TypeScript, Nest.js)."] },
       { "role": "Фронтенд-розробниця", "company": "CEPEGRA · Навчання", "period": "May 2025 – Oct 2025", "highlights": ["Навчання з React/Vue.js, Node.js, PHP, WordPress (ACF) та MySQL, а також інтеграції API й автоматизації на основі ШІ.", "Реалізувала командний фінальний проєкт за 4-тижневий спринт."] },
