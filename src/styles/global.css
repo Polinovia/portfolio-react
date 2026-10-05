@@ -1383,6 +1383,18 @@ nav {
   border-color: rgba(224, 168, 96, 0.35);
   background: rgba(224, 168, 96, 0.06);
 }
+.recommendation-item-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.skeleton-rec-comment {
+  height: 14px;
+  width: 100%;
+}
+.skeleton-rec-comment--short {
+  width: 65%;
+}
 .recommendation-status {
   margin-left: auto;
   display: inline-flex;

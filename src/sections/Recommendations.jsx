@@ -34,6 +34,18 @@ export default function Recommendations() {
     <div className="card recommendations" style={{ animation: 'cardIn 0.5s cubic-bezier(.22,1,.36,1) both' }}>
       <RecommendationForm onSubmitted={handleSubmitted} />
 
+      {loading && (
+        <div className="recommendation-list">
+          {[0, 1].map((i) => (
+            <div key={i} className="recommendation-item recommendation-item-skeleton">
+              <div className="skeleton-block skeleton-line--name" />
+              <div className="skeleton-block skeleton-rec-comment" />
+              <div className="skeleton-block skeleton-rec-comment skeleton-rec-comment--short" />
+            </div>
+          ))}
+        </div>
+      )}
+
       {!loading && !hasApproved && pendingLocal.length === 0 && (
         <p className="project-ratings-empty">{t('recommendations.noneYet')}</p>
       )}
